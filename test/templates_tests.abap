@@ -1,25 +1,16 @@
 "!
-"! ABAP Markdown
-"! (c) Guilherme Maeda
-"! http://abap.ninja
-"!
-"! For the full license information, view the LICENSE file that was distributed
-"! with this source code.
-"!
-
-"!
 "! Unit test class for the string template class
-*!
-class abap_unit_string_tests definition for testing.
+"!
+class string_tests definition for testing.
   "#AU Risk_Level Harmless
   "#AU Duration   Short
   private section.
     data: o_string type ref to lcl_string.
     methods:
       copying for testing.
-endclass.                    "abap_unit_string_tests DEFINITION
+endclass.                    "string_tests DEFINITION
 *!
-class abap_unit_string_tests implementation.
+class string_tests implementation.
   method copying.
     create object o_string.
     o_string->data = 'SpongeBob'.
@@ -32,13 +23,13 @@ class abap_unit_string_tests implementation.
       act = lo_new->data
     ).
   endmethod.                    "copying
-endclass.                    "abap_unit_string_tests IMPLEMENTATION
+endclass.                    "string_tests IMPLEMENTATION
 
 
 "!
 "! Unit test class for the string array template class
-*!
-class abap_unit_string_array_tests definition for testing.
+"!
+class string_array_tests definition for testing.
   "#AU Risk_Level Harmless
   "#AU Duration   Short
   private section.
@@ -49,9 +40,9 @@ class abap_unit_string_array_tests definition for testing.
       append_array for testing,
       delete for testing,
       find for testing.
-endclass.                    "abap_unit_string_array_tests DEFINITION
+endclass.                    "string_array_tests DEFINITION
 *!
-class abap_unit_string_array_tests implementation.
+class string_array_tests implementation.
   method copying.
     create object o_sa.
     o_sa->append( 'One' ).
@@ -131,13 +122,13 @@ class abap_unit_string_array_tests implementation.
       act = lv_index
     ).
   endmethod.                    "find
-endclass.                    "abap_unit_string_array_tests IMPLEMENTATION
+endclass.                    "string_array_tests IMPLEMENTATION
 
 
 "!
 "! Unit test class for the hashmap template class
-*!
-class abap_unit_hashmap_tests definition for testing.
+"!
+class hashmap_tests definition for testing.
   "#AU Risk_Level Harmless
   "#AU Duration   Short
   private section.
@@ -153,9 +144,9 @@ class abap_unit_hashmap_tests definition for testing.
       set for testing,
       exists for testing,
       delete for testing.
-endclass.                    "abap_unit_hashmap_tests DEFINITION
+endclass.                    "hashmap_tests DEFINITION
 *!
-class abap_unit_hashmap_tests implementation.
+class hashmap_tests implementation.
   method copying.
     create object o_hm
       exporting
@@ -297,4 +288,4 @@ class abap_unit_hashmap_tests implementation.
     lv_exists = o_hm->exists( 'IdxThree' ).
     cl_aunit_assert=>assert_not_initial( lv_exists ).
   endmethod.                    "delete
-endclass.                    "abap_unit_hashmap_tests IMPLEMENTATION
+endclass.                    "hashmap_tests IMPLEMENTATION

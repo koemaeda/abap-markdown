@@ -57,18 +57,20 @@ data_path = "data"
 md_files = [ f for f in listdir(data_path) if f.endswith(".md") ]
 
 # Read the code templates
-class_template = open("template/zmarkdown_tests.abap").read()
-method_template = open("template/zmarkdown_tests-method.abap").read()
+class_template = open("template/markdown_tests.abap").read()
+method_template = open("template/markdown_tests-method.abap").read()
+templates_tests = open("templates_tests.abap").read()
 
 # Generate the ABAP code
 today = datetime.now().date()
 method_names = []
 class_code = class_template.replace("[GENERATED_ON]", today.isoformat())
+class_code = class_code.replace("[INCLUDE templates_tests.abap]", templates_tests)
 
 method_implementations = []
 for f in md_files:
   method_name = re.sub(r"[-\s\.]", "_", f.replace(".md", ""))
-  method_names.append(method_name) 
+  method_names.append(method_name)
   method_code = method_template.replace("[METHOD_NAME]", method_name)
 
   markdown = open("data/" + f).read()
@@ -87,9 +89,6 @@ class_code = class_code.replace("[METHOD_IMPLEMENTATIONS]", \
   "\n\n".join(method_implementations))
 
 # Save the generated code
-with open("zmarkdown_tests.abap", "w") as f:
+with open("zmarkdown.clas.testclasses.abap", "w") as f:
     f.write(class_code)
 print("ABAP code successfuly generated.")
-
-
-

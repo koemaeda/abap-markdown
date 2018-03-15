@@ -4,14 +4,14 @@
 
 "!
 "! Value type interface
-*!
+"!
 interface lif_value_type.
   methods: copy importing source type ref to lif_value_type.
 endinterface.                    "lif_value_type
 
 "!
 "! String class for use in template objects
-*!
+"!
 class lcl_string definition final.
   public section.
     interfaces lif_value_type.
@@ -21,7 +21,7 @@ endclass.                    "lcl_string DEFINITION
 
 "!
 "! String array class for use in template objects
-*!
+"!
 class lcl_string_array definition final.
   public section.
     interfaces lif_value_type.
@@ -42,11 +42,11 @@ endclass.                    "lcl_array DEFINITION
 "!
 "! A compound value type may be used, separating the basic type and its subsequent
 "!  value type by a colon.
-"! Ex: 'lcl_hashmap:lcl_string_array' => The value type will be lcl_hashmap,
+"! Ex: 'lcl_hashmap:lcl_string_array' =&gt; The value type will be lcl_hashmap,
 "!     and the value hashmaps' values type will be of type lcl_string_array.
-"! Ex: 'lcl_hashmap:lcl_hashmap:lcl_hashmap:lcl_string' => Recursive composition,
+"! Ex: 'lcl_hashmap:lcl_hashmap:lcl_hashmap:lcl_string' =&gt; Recursive composition,
 "!     for use of a 4-dimensional hashmap.
-*!
+"!
 class lcl_hashmap definition final.
   public section.
     interfaces lif_value_type.

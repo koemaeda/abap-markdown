@@ -4,7 +4,7 @@ A Markdown parser in ABAP based on [Parsedown](http://parsedown.org)
 
 ### Features
 
-* Pure ABAP (ECC6 compatible)
+* Pure ABAP (version 7.30)
 * Fully tested with automated ABAPUnit test cases
 * Parses GitHub flavored Markdown
 
@@ -21,11 +21,9 @@ Install the ZMARKDOWN class as a global class.
 ### Code Example
 
 ``` abap
-data: o_markdown type ref to zmarkdown,
-      v_html type string.
+data(o_markdown) = new zmarkdown( ).
 
-create object o_markdown.
-v_html = o_markdown->text( 'Hello _ABAP Markdown_!' ).
+data(v_html) = o_markdown->text( 'Hello _ABAP Markdown_!' ).
 write / v_html.
 ```
 

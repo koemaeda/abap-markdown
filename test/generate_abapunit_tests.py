@@ -72,6 +72,8 @@ for f in md_files:
   method_name = re.sub(r"[-\s\.]", "_", f.replace(".md", ""))
   method_names.append(method_name)
   method_code = method_template.replace("[METHOD_NAME]", method_name)
+  method_code = method_code.replace("[SAFE_MODE]", \
+    "abap_true" if method_name.startswith("xss") else "abap_false")
 
   markdown = open("data/" + f).read()
   method_code = method_code.replace("[MARKDOWN_LINES]", \

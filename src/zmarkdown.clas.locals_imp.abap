@@ -1,3 +1,6 @@
+*"* use this source file for the definition and implementation of
+*"* local helper classes, interface definitions and type
+*"* declarations
 *!
 class lcl_string implementation.
   method lif_value_type~copy.

@@ -1,1026 +1,1026 @@
-class ZMARKDOWN definition
-  public
-  create public .
+CLASS zmarkdown DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  constants VERSION type STRING value '1.1.0' ##NO_TEXT.
+    CONSTANTS version TYPE string VALUE '1.1.0' ##NO_TEXT.
 
-  methods TEXT
-    importing
-      value(TEXT) type CLIKE
-    returning
-      value(MARKUP) type STRING .
-  methods SET_BREAKS_ENABLED
-    importing
-      value(BREAKS_ENABLED) type CLIKE
-    returning
-      value(THIS) type ref to ZMARKDOWN .
-  methods SET_MARKUP_ESCAPED
-    importing
-      value(MARKUP_ESCAPED) type CLIKE
-    returning
-      value(THIS) type ref to ZMARKDOWN .
-  methods SET_URLS_LINKED
-    importing
-      value(URLS_LINKED) type CLIKE
-    returning
-      value(THIS) type ref to ZMARKDOWN .
-  methods SET_SAFE_MODE
-    importing
-      !SAFE_MODE type CLIKE
-    returning
-      value(THIS) type ref to ZMARKDOWN .
-  methods CONSTRUCTOR .
-protected section.
-private section.
+    METHODS text
+      IMPORTING
+        VALUE(text)   TYPE clike
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS set_breaks_enabled
+      IMPORTING
+        VALUE(breaks_enabled) TYPE clike
+      RETURNING
+        VALUE(this)           TYPE REF TO zmarkdown .
+    METHODS set_markup_escaped
+      IMPORTING
+        VALUE(markup_escaped) TYPE clike
+      RETURNING
+        VALUE(this)           TYPE REF TO zmarkdown .
+    METHODS set_urls_linked
+      IMPORTING
+        VALUE(urls_linked) TYPE clike
+      RETURNING
+        VALUE(this)        TYPE REF TO zmarkdown .
+    METHODS set_safe_mode
+      IMPORTING
+        !safe_mode  TYPE clike
+      RETURNING
+        VALUE(this) TYPE REF TO zmarkdown .
+    METHODS constructor .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 
-  types:
-    begin of ty_element_attribute,
-      name type string,
-      value type string,
-    end of ty_element_attribute .
-  types:
-    ty_t_element_attribute type standard table of ty_element_attribute with key name .
-  types:
-    begin of ty_element0,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type string,
-      lines type standard table of string with default key,
-    end of ty_element0 .
-  types:
-    ty_t_element0 type standard table of ty_element0 with default key .
-  types:
-    begin of ty_element1,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type string,
-      texts type ty_t_element0,
-      lines type standard table of string with default key,
-    end of ty_element1 .
-  types:
-    ty_t_element1 type standard table of ty_element1 with default key .
-  types:
-    begin of ty_element2,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type string,
-      texts type ty_t_element1,
-      lines type standard table of string with default key,
-    end of ty_element2 .
-  types:
-    ty_t_element2 type standard table of ty_element2 with default key .
-  types:
-    begin of ty_element3,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type string,
-      texts type ty_t_element2,
-      lines type standard table of string with default key,
-    end of ty_element3 .
-  types:
-    ty_t_element3 type standard table of ty_element3 with default key .
-  types:
-    begin of ty_element4,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type string,
-      texts type ty_t_element3,
-      lines type standard table of string with default key,
-    end of ty_element4 .
-  types:
-    ty_t_element4 type standard table of ty_element4 with default key .
-  types:
-    begin of ty_element5,
-      name type string,
-      handler type string,
-      attributes type ty_t_element_attribute,
-      text type ty_element4,
-      texts type ty_t_element4,
-      lines type standard table of string with default key,
-    end of ty_element5 .
-  types:
-    ty_t_element5 type standard table of ty_element5 with default key .
-  types TY_ELEMENT type TY_ELEMENT5 .
-  types:
-    ty_t_element type standard table of ty_element with default key .
-  types:
-    begin of ty_block,
-      "// general block fields
-      continuable type abap_bool,
-      identified type abap_bool,
-      interrupted type abap_bool,
-      hidden type abap_bool,
-      closed type abap_bool,
-      type type string,
-      markup type string,
-      element type ty_element,
-      "// specific block fields
-      char type c length 1,
-      complete type abap_bool,
-      indent type i,
-      pattern type string,
-      li type ty_element4,
-      loose type abap_bool,
-      name type string,
-      depth type i,
-      void type abap_bool,
-      alignments type standard table of string with default key,
-    end of ty_block .
-  types:
-    begin of ty_line,
-      body type string,
-      indent type i,
-      text type string,
-    end of ty_line .
-  types:
-    begin of ty_excerpt,
-      text type string,
-      context type string,
-    end of ty_excerpt .
-  types:
-    begin of ty_inline,
-      position type i,
-      markup type string,
-      extent type string,
-      element type ty_element,
-    end of ty_inline .
+    TYPES:
+      BEGIN OF ty_element_attribute,
+        name  TYPE string,
+        value TYPE string,
+      END OF ty_element_attribute .
+    TYPES:
+      ty_t_element_attribute TYPE STANDARD TABLE OF ty_element_attribute WITH KEY name .
+    TYPES:
+      BEGIN OF ty_element0,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE string,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element0 .
+    TYPES:
+      ty_t_element0 TYPE STANDARD TABLE OF ty_element0 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_element1,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE string,
+        texts      TYPE ty_t_element0,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element1 .
+    TYPES:
+      ty_t_element1 TYPE STANDARD TABLE OF ty_element1 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_element2,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE string,
+        texts      TYPE ty_t_element1,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element2 .
+    TYPES:
+      ty_t_element2 TYPE STANDARD TABLE OF ty_element2 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_element3,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE string,
+        texts      TYPE ty_t_element2,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element3 .
+    TYPES:
+      ty_t_element3 TYPE STANDARD TABLE OF ty_element3 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_element4,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE string,
+        texts      TYPE ty_t_element3,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element4 .
+    TYPES:
+      ty_t_element4 TYPE STANDARD TABLE OF ty_element4 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_element5,
+        name       TYPE string,
+        handler    TYPE string,
+        attributes TYPE ty_t_element_attribute,
+        text       TYPE ty_element4,
+        texts      TYPE ty_t_element4,
+        lines      TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_element5 .
+    TYPES:
+      ty_t_element5 TYPE STANDARD TABLE OF ty_element5 WITH DEFAULT KEY .
+    TYPES ty_element TYPE ty_element5 .
+    TYPES:
+      ty_t_element TYPE STANDARD TABLE OF ty_element WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_block,
+        "// general block fields
+        continuable TYPE abap_bool,
+        identified  TYPE abap_bool,
+        interrupted TYPE abap_bool,
+        hidden      TYPE abap_bool,
+        closed      TYPE abap_bool,
+        type        TYPE string,
+        markup      TYPE string,
+        element     TYPE ty_element,
+        "// specific block fields
+        char        TYPE c LENGTH 1,
+        complete    TYPE abap_bool,
+        indent      TYPE i,
+        pattern     TYPE string,
+        li          TYPE ty_element4,
+        loose       TYPE abap_bool,
+        name        TYPE string,
+        depth       TYPE i,
+        void        TYPE abap_bool,
+        alignments  TYPE STANDARD TABLE OF string WITH DEFAULT KEY,
+      END OF ty_block .
+    TYPES:
+      BEGIN OF ty_line,
+        body   TYPE string,
+        indent TYPE i,
+        text   TYPE string,
+      END OF ty_line .
+    TYPES:
+      BEGIN OF ty_excerpt,
+        text    TYPE string,
+        context TYPE string,
+      END OF ty_excerpt .
+    TYPES:
+      BEGIN OF ty_inline,
+        position TYPE i,
+        markup   TYPE string,
+        extent   TYPE string,
+        element  TYPE ty_element,
+      END OF ty_inline .
 
-  data BREAKS_ENABLED type ABAP_BOOL .
-  data MARKUP_ESCAPED type ABAP_BOOL .
-  data URLS_LINKED type ABAP_BOOL value ABAP_TRUE ##NO_TEXT.
-  data SAFE_MODE type ABAP_BOOL .
-  data BLOCK_TYPES type ref to LCL_HASHMAP .
-  data UNMARKED_BLOCK_TYPES type ref to LCL_STRING_ARRAY .
-  data INLINE_TYPES type ref to LCL_HASHMAP .
-  data INLINE_MARKER_LIST type STRING value '!"*_&[:<>`~\\' ##NO_TEXT.
-  data DEFINITION_DATA type ref to LCL_HASHMAP .
-  data SPECIAL_CHARACTERS type ref to LCL_STRING_ARRAY .
-  data STRONG_REGEX type ref to LCL_HASHMAP .
-  data EM_REGEX type ref to LCL_HASHMAP .
-  data REGEX_HTML_ATTRIBUTE type STRING value '[a-zA-Z_:][\w:.-]*(?:\s*=\s*(?:[^"''=<>`\s]+|"[^"]*"|''[^'']*''))?' ##NO_TEXT.
-  data VOID_ELEMENTS type ref to LCL_STRING_ARRAY .
-  data TEXT_LEVEL_ELEMENTS type ref to LCL_STRING_ARRAY .
-  data SAFE_LINKS_WHITELIST type ref to LCL_STRING_ARRAY .
-  data:
-    methods type standard table of string .
+    DATA breaks_enabled TYPE abap_bool .
+    DATA markup_escaped TYPE abap_bool .
+    DATA urls_linked TYPE abap_bool VALUE abap_true ##NO_TEXT.
+    DATA safe_mode TYPE abap_bool .
+    DATA block_types TYPE REF TO lcl_hashmap .
+    DATA unmarked_block_types TYPE REF TO lcl_string_array .
+    DATA inline_types TYPE REF TO lcl_hashmap .
+    DATA inline_marker_list TYPE string VALUE '!"*_&[:<>`~\\' ##NO_TEXT.
+    DATA definition_data TYPE REF TO lcl_hashmap .
+    DATA special_characters TYPE REF TO lcl_string_array .
+    DATA strong_regex TYPE REF TO lcl_hashmap .
+    DATA em_regex TYPE REF TO lcl_hashmap .
+    DATA regex_html_attribute TYPE string VALUE '[a-zA-Z_:][\w:.-]*(?:\s*=\s*(?:[^"''=<>`\s]+|"[^"]*"|''[^'']*''))?' ##NO_TEXT.
+    DATA void_elements TYPE REF TO lcl_string_array .
+    DATA text_level_elements TYPE REF TO lcl_string_array .
+    DATA safe_links_whitelist TYPE REF TO lcl_string_array .
+    DATA:
+      methods TYPE STANDARD TABLE OF string .
 
-  class-methods HTMLSPECIALCHARS
-    importing
-      !INPUT type STRING
-      !ENT_HTML401 type ABAP_BOOL default ABAP_TRUE
-      !ENT_NOQUOTES type ABAP_BOOL optional
-      !ENT_QUOTES type ABAP_BOOL optional
-    returning
-      value(OUTPUT) type STRING .
-  class-methods TRIM
-    importing
-      !STR type STRING
-      value(MASK) type STRING default ' \t\n\r'
-    returning
-      value(R_STR) type STRING .
-  class-methods CHOP
-    importing
-      !STR type STRING
-      value(MASK) type STRING default ' \t\n\r'
-    returning
-      value(R_STR) type STRING .
-  class-methods MAGIC_MOVE
-    importing
-      !FROM type ANY
-      !NAME type CLIKE optional
-    changing
-      !TO type ANY .
-  class-methods MATCH_MARKED_STRING
-    importing
-      value(MARKER) type STRING
-      !SUBJECT type STRING
-    exporting
-      value(M0) type STRING
-      value(M1) type STRING
-    exceptions
-      NOT_FOUND .
-  class-methods _ESCAPE
-    importing
-      !TEXT type STRING
-      !ALLOW_QUOTES type ABAP_BOOL optional
-    returning
-      value(OUTPUT) type STRING .
-  class-methods STRI_AT_START
-    importing
-      !HAYSTACK type STRING
-      !NEEDLE type STRING
-    returning
-      value(RESULT) type ABAP_BOOL .
-  methods _LINES
-    importing
-      !LINES type STANDARD TABLE
-    returning
-      value(MARKUP) type STRING .
-  methods BLOCK_CODE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_CODE_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_CODE_COMPLETE
-    importing
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_COMMENT
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_COMMENT_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_FENCEDCODE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_FENCEDCODE_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_FENCEDCODE_COMPLETE
-    importing
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_HEADER
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_LIST
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_LIST_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_LIST_COMPLETE
-    importing
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_QUOTE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_QUOTE_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_RULE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_SETEXTHEADER
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_MARKUP
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_MARKUP_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_REFERENCE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_TABLE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK optional
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods BLOCK_TABLE_CONTINUE
-    importing
-      !LINE type TY_LINE
-      !BLOCK type TY_BLOCK
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods PARAGRAPH
-    importing
-      !LINE type TY_LINE
-    returning
-      value(R_BLOCK) type TY_BLOCK .
-  methods LINE
-    importing
-      !ELEMENT type TY_ELEMENT4
-    returning
-      value(MARKUP) type STRING .
-  methods INLINE_CODE
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_EMAILTAG
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_EMPHASIS
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_ESCAPESEQUENCE
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_IMAGE
-    importing
-      value(EXCERPT) type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_LINK
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_MARKUP
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_SPECIALCHARACTER
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_STRIKETHROUGH
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_URL
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods INLINE_URLTAG
-    importing
-      !EXCERPT type TY_EXCERPT
-    returning
-      value(R_INLINE) type TY_INLINE .
-  methods UNMARKED_TEXT
-    importing
-      !TEXT type STRING
-    returning
-      value(R_TEXT) type STRING .
-  methods ELEMENT
-    importing
-      !ELEMENT type ANY
-    returning
-      value(MARKUP) type STRING .
-  methods ELEMENTS
-    importing
-      !ELEMENTS type STANDARD TABLE
-    returning
-      value(MARKUP) type STRING .
-  methods LI
-    importing
-      !LINES type STANDARD TABLE
-    returning
-      value(MARKUP) type STRING .
-  methods FILTER_UNSAFE_URL_IN_ATTRIBUTE
-    importing
-      !ELEMENT type TY_ELEMENT
-      !ATTRIBUTE type STRING
-    returning
-      value(R_ELEMENT) type TY_ELEMENT .
-  methods SANITISE_ELEMENT
-    importing
-      !ELEMENT type TY_ELEMENT
-    returning
-      value(R_ELEMENT) type TY_ELEMENT .
+    CLASS-METHODS htmlspecialchars
+      IMPORTING
+        !input        TYPE string
+        !ent_html401  TYPE abap_bool DEFAULT abap_true
+        !ent_noquotes TYPE abap_bool OPTIONAL
+        !ent_quotes   TYPE abap_bool OPTIONAL
+      RETURNING
+        VALUE(output) TYPE string .
+    CLASS-METHODS trim
+      IMPORTING
+        !str         TYPE string
+        VALUE(mask)  TYPE string DEFAULT ' \t\n\r'
+      RETURNING
+        VALUE(r_str) TYPE string .
+    CLASS-METHODS chop
+      IMPORTING
+        !str         TYPE string
+        VALUE(mask)  TYPE string DEFAULT ' \t\n\r'
+      RETURNING
+        VALUE(r_str) TYPE string .
+    CLASS-METHODS magic_move
+      IMPORTING
+        !from TYPE any
+        !name TYPE clike OPTIONAL
+      CHANGING
+        !to   TYPE any .
+    CLASS-METHODS match_marked_string
+      IMPORTING
+        VALUE(marker) TYPE string
+        !subject      TYPE string
+      EXPORTING
+        VALUE(m0)     TYPE string
+        VALUE(m1)     TYPE string
+      EXCEPTIONS
+        not_found .
+    CLASS-METHODS _escape
+      IMPORTING
+        !text         TYPE string
+        !allow_quotes TYPE abap_bool OPTIONAL
+      RETURNING
+        VALUE(output) TYPE string .
+    CLASS-METHODS stri_at_start
+      IMPORTING
+        !haystack     TYPE string
+        !needle       TYPE string
+      RETURNING
+        VALUE(result) TYPE abap_bool .
+    METHODS _lines
+      IMPORTING
+        !lines        TYPE STANDARD TABLE
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS block_code
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_code_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_code_complete
+      IMPORTING
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_comment
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_comment_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_fencedcode
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_fencedcode_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_fencedcode_complete
+      IMPORTING
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_header
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_list
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_list_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_list_complete
+      IMPORTING
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_quote
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_quote_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_rule
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_setextheader
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_markup
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_markup_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_reference
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_table
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block OPTIONAL
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS block_table_continue
+      IMPORTING
+        !line          TYPE ty_line
+        !block         TYPE ty_block
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS paragraph
+      IMPORTING
+        !line          TYPE ty_line
+      RETURNING
+        VALUE(r_block) TYPE ty_block .
+    METHODS line
+      IMPORTING
+        !element      TYPE ty_element4
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS inline_code
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_emailtag
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_emphasis
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_escapesequence
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_image
+      IMPORTING
+        VALUE(excerpt)  TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_link
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_markup
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_specialcharacter
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_strikethrough
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_url
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS inline_urltag
+      IMPORTING
+        !excerpt        TYPE ty_excerpt
+      RETURNING
+        VALUE(r_inline) TYPE ty_inline .
+    METHODS unmarked_text
+      IMPORTING
+        !text         TYPE string
+      RETURNING
+        VALUE(r_text) TYPE string .
+    METHODS element
+      IMPORTING
+        !element      TYPE any
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS elements
+      IMPORTING
+        !elements     TYPE STANDARD TABLE
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS li
+      IMPORTING
+        !lines        TYPE STANDARD TABLE
+      RETURNING
+        VALUE(markup) TYPE string .
+    METHODS filter_unsafe_url_in_attribute
+      IMPORTING
+        !element         TYPE ty_element
+        !attribute       TYPE string
+      RETURNING
+        VALUE(r_element) TYPE ty_element .
+    METHODS sanitise_element
+      IMPORTING
+        !element         TYPE ty_element
+      RETURNING
+        VALUE(r_element) TYPE ty_element .
 ENDCLASS.
 
 
 
-CLASS ZMARKDOWN IMPLEMENTATION.
+CLASS zmarkdown IMPLEMENTATION.
 
 
-method block_code.
-    if block is not initial and
-       block-type is initial and
-       block-interrupted is initial.
-      return.
-    endif.
+  METHOD block_code.
+    IF block IS NOT INITIAL AND
+       block-type IS INITIAL AND
+       block-interrupted IS INITIAL.
+      RETURN.
+    ENDIF.
 
-    if line-indent >= 4.
+    IF line-indent >= 4.
       r_block-element-name = 'pre'.
       r_block-element-handler = 'element'.
       r_block-element-text-name = 'code'.
       r_block-element-text-text = line-body+4.
-    endif.
-  endmethod.                    "block_code
+    ENDIF.
+  ENDMETHOD.                    "block_code
 
 
-method block_code_complete.
+  METHOD block_code_complete.
     r_block = block.
     r_block-element-text-text = r_block-element-text-text.
-  endmethod.                    "block_code_complete
+  ENDMETHOD.                    "block_code_complete
 
 
-method block_code_continue.
-    data: lv_text type string.
+  METHOD block_code_continue.
+    DATA: lv_text TYPE string.
 
-    if line-indent >= 4.
+    IF line-indent >= 4.
       r_block = block.
 
-      if block-interrupted is not initial.
-        concatenate r_block-element-text-text %_newline
-          into r_block-element-text-text respecting blanks.
-        clear r_block-interrupted.
-      endif.
+      IF block-interrupted IS NOT INITIAL.
+        CONCATENATE r_block-element-text-text %_newline
+          INTO r_block-element-text-text RESPECTING BLANKS.
+        CLEAR r_block-interrupted.
+      ENDIF.
 
       lv_text = line-body+4.
-      concatenate r_block-element-text-text %_newline lv_text
-        into r_block-element-text-text respecting blanks.
-    endif.
-  endmethod.                    "block_code_continue
+      CONCATENATE r_block-element-text-text %_newline lv_text
+        INTO r_block-element-text-text RESPECTING BLANKS.
+    ENDIF.
+  ENDMETHOD.                    "block_code_continue
 
 
-method block_comment.
-    check me->markup_escaped is initial.
+  METHOD block_comment.
+    CHECK me->markup_escaped IS INITIAL.
 
-    if strlen( line-text ) >= 3 and
-       line-text+3(1) = '-' and
-       line-text+2(1) = '-' and
+    IF strlen( line-text ) >= 3 AND
+       line-text+3(1) = '-' AND
+       line-text+2(1) = '-' AND
        line-text+1(1) = '!'.
       r_block-markup = line-body.
 
-      find regex '-->$' in line-text.
-      if sy-subrc = 0.
+      FIND REGEX '-->$' IN line-text.
+      IF sy-subrc = 0.
         r_block-closed = abap_true.
-      endif.
-    endif.
-  endmethod.                    "block_Comment
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "block_Comment
 
 
-method block_comment_continue.
-    check block-closed is initial.
+  METHOD block_comment_continue.
+    CHECK block-closed IS INITIAL.
     r_block = block.
 
-    concatenate r_block-markup %_newline line-body into r_block-markup.
+    CONCATENATE r_block-markup %_newline line-body INTO r_block-markup.
 
-    find regex '-->$' in line-text.
-    if sy-subrc = 0.
+    FIND REGEX '-->$' IN line-text.
+    IF sy-subrc = 0.
       r_block-closed = abap_true.
-    endif.
-  endmethod.                    "block_Comment_Continue
+    ENDIF.
+  ENDMETHOD.                    "block_Comment_Continue
 
 
-method block_fencedcode.
-    data(lv_regex) = '^[' && line-text(1) && ']{3,}[ ]*([^`]+)?[ ]*$'.
-    find regex lv_regex in line-text submatches data(lv_m1).
-    if sy-subrc = 0.
-      if lv_m1 is not initial.
-        append initial line to r_block-element-text-attributes assigning field-symbol(<attribute>).
+  METHOD block_fencedcode.
+    DATA(lv_regex) = '^[' && line-text(1) && ']{3,}[ ]*([^`]+)?[ ]*$'.
+    FIND REGEX lv_regex IN line-text SUBMATCHES DATA(lv_m1).
+    IF sy-subrc = 0.
+      IF lv_m1 IS NOT INITIAL.
+        APPEND INITIAL LINE TO r_block-element-text-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
         <attribute>-name = 'class'.
-        concatenate 'language-' lv_m1 into <attribute>-value.
-      endif.
+        CONCATENATE 'language-' lv_m1 INTO <attribute>-value.
+      ENDIF.
 
       r_block-char = line-text(1).
       r_block-element-name = 'pre'.
       r_block-element-handler = 'element'.
       r_block-element-text-name = 'code'.
-    endif.
-  endmethod.                    "block_Fenced_Code
+    ENDIF.
+  ENDMETHOD.                    "block_Fenced_Code
 
 
-method block_fencedcode_complete.
+  METHOD block_fencedcode_complete.
     r_block = block.
     r_block-element-text-text = r_block-element-text-text.
-  endmethod.                    "block_Fenced_Code_Complete
+  ENDMETHOD.                    "block_Fenced_Code_Complete
 
 
-method block_fencedcode_continue.
-    data: lv_regex type string.
+  METHOD block_fencedcode_continue.
+    DATA: lv_regex TYPE string.
 
-    check block-complete is initial.
+    CHECK block-complete IS INITIAL.
     r_block = block.
 
-    if r_block-interrupted is not initial.
-      concatenate r_block-element-text-text %_newline into r_block-element-text-text.
-      clear r_block-interrupted.
-    endif.
+    IF r_block-interrupted IS NOT INITIAL.
+      CONCATENATE r_block-element-text-text %_newline INTO r_block-element-text-text.
+      CLEAR r_block-interrupted.
+    ENDIF.
 
-    concatenate '^' block-char '{3,}[ ]*$' into lv_regex.
-    find regex lv_regex in line-text.
-    if sy-subrc = 0.
+    CONCATENATE '^' block-char '{3,}[ ]*$' INTO lv_regex.
+    FIND REGEX lv_regex IN line-text.
+    IF sy-subrc = 0.
       r_block-element-text-text = r_block-element-text-text+1.
       r_block-complete = abap_true.
-      return.
-    endif.
+      RETURN.
+    ENDIF.
 
-    concatenate
+    CONCATENATE
       r_block-element-text-text %_newline line-body
-      into r_block-element-text-text.
-  endmethod.                    "block_Fenced_Code_Continue
+      INTO r_block-element-text-text.
+  ENDMETHOD.                    "block_Fenced_Code_Continue
 
 
-method block_header.
-    check strlen( line-text ) > 1 and line-text+1(1) is not initial.
+  METHOD block_header.
+    CHECK strlen( line-text ) > 1 AND line-text+1(1) IS NOT INITIAL.
 
-    data: lv_level type i value 1,
-          lv_h_level type n.
+    DATA: lv_level   TYPE i VALUE 1,
+          lv_h_level TYPE n.
 
-    while ( lv_level < strlen( line-text ) and
+    WHILE ( lv_level < strlen( line-text ) AND
             line-text+lv_level(1) = '#' ).
-      add 1 to lv_level.
-    endwhile.
+      ADD 1 TO lv_level.
+    ENDWHILE.
 
-    check not lv_level > 6.
+    CHECK NOT lv_level > 6.
     lv_h_level = lv_level.
-    concatenate 'h' lv_h_level into r_block-element-name.
+    CONCATENATE 'h' lv_h_level INTO r_block-element-name.
     r_block-element-text-text = line-text.
     r_block-element-text-text = trim( str = r_block-element-text-text mask = ' #' ).
-    condense r_block-element-text-text.
+    CONDENSE r_block-element-text-text.
     r_block-element-handler = 'line'.
-  endmethod.                    "block_Header
+  ENDMETHOD.                    "block_Header
 
 
-method block_list.
-  data: lv_name    type string,
-        lv_pattern type string.
+  METHOD block_list.
+    DATA: lv_name    TYPE string,
+          lv_pattern TYPE string.
 
-  if line-text(1) <= '-'.
-    lv_name = 'ul'.
-    lv_pattern = '[*+-]'.
-  else.
-    lv_name = 'ol'.
-    lv_pattern = '[0-9]+[.]'.
-  endif.
+    IF line-text(1) <= '-'.
+      lv_name = 'ul'.
+      lv_pattern = '[*+-]'.
+    ELSE.
+      lv_name = 'ol'.
+      lv_pattern = '[0-9]+[.]'.
+    ENDIF.
 
-  data(lv_regex) = '^(' && lv_pattern && '[ ]+)(.*)'.
-  find regex lv_regex in line-text submatches data(lv_m1) data(lv_m2).
-  if sy-subrc = 0.
-    r_block-indent = line-indent.
-    r_block-pattern = lv_pattern.
-    r_block-element-name = lv_name.
-    r_block-element-handler = 'elements'.
+    DATA(lv_regex) = '^(' && lv_pattern && '[ ]+)(.*)'.
+    FIND REGEX lv_regex IN line-text SUBMATCHES DATA(lv_m1) DATA(lv_m2).
+    IF sy-subrc = 0.
+      r_block-indent = line-indent.
+      r_block-pattern = lv_pattern.
+      r_block-element-name = lv_name.
+      r_block-element-handler = 'elements'.
 
-    if r_block-element-name = 'ol'.
-      data(lv_list_start) = substring_before( val = line-text sub = '.' case = abap_false ).
-      if lv_list_start <> '1'.
-        append initial line to r_block-element-attributes assigning field-symbol(<attribute>).
-        <attribute>-name = 'start'.
-        <attribute>-value = lv_list_start.
-      endif.
-    endif.
+      IF r_block-element-name = 'ol'.
+        DATA(lv_list_start) = substring_before( val = line-text sub = '.' case = abap_false ).
+        IF lv_list_start <> '1'.
+          APPEND INITIAL LINE TO r_block-element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
+          <attribute>-name = 'start'.
+          <attribute>-value = lv_list_start.
+        ENDIF.
+      ENDIF.
 
-    r_block-li-name = 'li'.
-    r_block-li-handler = 'li'.
-    append lv_m2 to r_block-li-lines.
-  endif.
-endmethod.                    "block_List
+      r_block-li-name = 'li'.
+      r_block-li-handler = 'li'.
+      APPEND lv_m2 TO r_block-li-lines.
+    ENDIF.
+  ENDMETHOD.                    "block_List
 
 
-method block_list_complete.
+  METHOD block_list_complete.
     r_block = block.
 
-    append r_block-li to r_block-element-texts.
+    APPEND r_block-li TO r_block-element-texts.
 
-    if r_block-loose is not initial.
-      loop at r_block-element-texts assigning field-symbol(<li>).
-        assign <li>-lines[ lines( r_block-li-lines ) ] to field-symbol(<last_line>).
-        if sy-subrc = 0 and <last_line> is not initial.
-          append initial line to <li>-lines.
-        endif.
-      endloop.
-    endif.
-  endmethod.                    "block_List_complete
+    IF r_block-loose IS NOT INITIAL.
+      LOOP AT r_block-element-texts ASSIGNING FIELD-SYMBOL(<li>).
+        ASSIGN <li>-lines[ lines( r_block-li-lines ) ] TO FIELD-SYMBOL(<last_line>).
+        IF sy-subrc = 0 AND <last_line> IS NOT INITIAL.
+          APPEND INITIAL LINE TO <li>-lines.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+  ENDMETHOD.                    "block_List_complete
 
 
-method block_list_continue.
+  METHOD block_list_continue.
     r_block = block.
 
-    data(lv_regex) = '^' && block-pattern && '(?:[ ]+(.*)|$)'.
-    if block-indent = line-indent.
-      find regex lv_regex in line-text submatches data(lv_m1).
-      if sy-subrc = 0.
-        if r_block-interrupted is not initial.
-          append initial line to r_block-li-lines.
+    DATA(lv_regex) = '^' && block-pattern && '(?:[ ]+(.*)|$)'.
+    IF block-indent = line-indent.
+      FIND REGEX lv_regex IN line-text SUBMATCHES DATA(lv_m1).
+      IF sy-subrc = 0.
+        IF r_block-interrupted IS NOT INITIAL.
+          APPEND INITIAL LINE TO r_block-li-lines.
           r_block-loose = abap_true.
-          clear r_block-interrupted.
-        endif.
-        append r_block-li to r_block-element-texts.
+          CLEAR r_block-interrupted.
+        ENDIF.
+        APPEND r_block-li TO r_block-element-texts.
 
-        clear r_block-li.
+        CLEAR r_block-li.
         r_block-li-name = 'li'.
         r_block-li-handler = 'li'.
-        append lv_m1 to r_block-li-lines.
-        return.
-      endif.
-    endif.
+        APPEND lv_m1 TO r_block-li-lines.
+        RETURN.
+      ENDIF.
+    ENDIF.
 
-    if line-text(1) = '['.
-      data(ls_block) = block_reference( line ).
-      if ls_block is not initial.
-        return.
-      endif.
-    endif.
+    IF line-text(1) = '['.
+      DATA(ls_block) = block_reference( line ).
+      IF ls_block IS NOT INITIAL.
+        RETURN.
+      ENDIF.
+    ENDIF.
 
-    if r_block-interrupted is initial.
-      data(lv_text) = line-body.
-      replace all occurrences of regex '^[ ]{0,4}' in lv_text with ''.
-      append lv_text to r_block-li-lines.
-      return.
-    endif.
+    IF r_block-interrupted IS INITIAL.
+      DATA(lv_text) = line-body.
+      REPLACE ALL OCCURRENCES OF REGEX '^[ ]{0,4}' IN lv_text WITH ''.
+      APPEND lv_text TO r_block-li-lines.
+      RETURN.
+    ENDIF.
 
-    if line-indent > 0.
-      append initial line to r_block-li-lines.
+    IF line-indent > 0.
+      APPEND INITIAL LINE TO r_block-li-lines.
       lv_text = line-body.
-      replace all occurrences of regex '^[ ]{0,4}' in lv_text with ''.
-      append lv_text to r_block-li-lines.
-      clear r_block-interrupted.
-      return.
-    endif.
+      REPLACE ALL OCCURRENCES OF REGEX '^[ ]{0,4}' IN lv_text WITH ''.
+      APPEND lv_text TO r_block-li-lines.
+      CLEAR r_block-interrupted.
+      RETURN.
+    ENDIF.
 
-    clear r_block.
-  endmethod.                    "block_List_Continue
+    CLEAR r_block.
+  ENDMETHOD.                    "block_List_Continue
 
 
-method block_markup.
-    check: me->markup_escaped is initial,
-           me->safe_mode is initial.
+  METHOD block_markup.
+    CHECK: me->markup_escaped IS INITIAL,
+           me->safe_mode IS INITIAL.
 
-    data(lv_regex) = '^<(\w*)(?:[ ]*' && me->regex_html_attribute && ')*[ ]*(/)?>'.
-    find first occurrence of regex lv_regex in line-text submatches data(lv_m1) data(lv_m2)
-      match length data(lv_length).
-    if sy-subrc = 0.
+    DATA(lv_regex) = '^<(\w*)(?:[ ]*' && me->regex_html_attribute && ')*[ ]*(/)?>'.
+    FIND FIRST OCCURRENCE OF REGEX lv_regex IN line-text SUBMATCHES DATA(lv_m1) DATA(lv_m2)
+      MATCH LENGTH DATA(lv_length).
+    IF sy-subrc = 0.
 
-      data(lv_index) = me->text_level_elements->find( lv_m1 ).
-      check lv_index = 0.
+      DATA(lv_index) = me->text_level_elements->find( lv_m1 ).
+      CHECK lv_index = 0.
 
       r_block-name = lv_m1.
       r_block-depth = 0.
       r_block-markup = line-text.
 
-      data(lv_remainder) = line-text+lv_length.
-      data(lv_remainder_trimmed) = trim( lv_remainder ).
+      DATA(lv_remainder) = line-text+lv_length.
+      DATA(lv_remainder_trimmed) = trim( lv_remainder ).
 
       lv_index = me->void_elements->find( lv_m1 ).
 
-      if lv_remainder_trimmed is initial.
-        if lv_m2 is not initial or lv_index <> 0.
+      IF lv_remainder_trimmed IS INITIAL.
+        IF lv_m2 IS NOT INITIAL OR lv_index <> 0.
           r_block-closed = abap_true.
           r_block-void = abap_true.
-        endif.
-      else.
-        if lv_m2 is not initial or lv_index <> 0.
-          clear r_block.
-          return.
-        endif.
+        ENDIF.
+      ELSE.
+        IF lv_m2 IS NOT INITIAL OR lv_index <> 0.
+          CLEAR r_block.
+          RETURN.
+        ENDIF.
 
-        concatenate '</' lv_m1 '>[ ]*$' into lv_regex.
-        find first occurrence of regex lv_regex in lv_remainder ignoring case.
-        if sy-subrc = 0.
+        CONCATENATE '</' lv_m1 '>[ ]*$' INTO lv_regex.
+        FIND FIRST OCCURRENCE OF REGEX lv_regex IN lv_remainder IGNORING CASE.
+        IF sy-subrc = 0.
           r_block-closed = abap_true.
-        endif.
-      endif.
+        ENDIF.
+      ENDIF.
 
-    endif. "regex sy-subrc = 0
-  endmethod.                    "block_Markup
+    ENDIF. "regex sy-subrc = 0
+  ENDMETHOD.                    "block_Markup
 
 
-method block_markup_continue.
-    data: lv_regex type string.
+  METHOD block_markup_continue.
+    DATA: lv_regex TYPE string.
 
-    check block-closed is initial.
+    CHECK block-closed IS INITIAL.
     r_block = block.
 
-    concatenate '^<' r_block-name '(?:[ ]*' me->regex_html_attribute ')*[ ]*>' into lv_regex.
-    find regex lv_regex in line-text ignoring case. "open
-    if sy-subrc = 0.
-      add 1 to r_block-depth.
-    endif.
+    CONCATENATE '^<' r_block-name '(?:[ ]*' me->regex_html_attribute ')*[ ]*>' INTO lv_regex.
+    FIND REGEX lv_regex IN line-text IGNORING CASE. "open
+    IF sy-subrc = 0.
+      ADD 1 TO r_block-depth.
+    ENDIF.
 
-    concatenate '</' r_block-name '>[ ]*$' into lv_regex.
-    find regex lv_regex in line-text ignoring case. "close
-    if sy-subrc = 0.
-      if r_block-depth > 0.
-        subtract 1 from r_block-depth.
-      else.
+    CONCATENATE '</' r_block-name '>[ ]*$' INTO lv_regex.
+    FIND REGEX lv_regex IN line-text IGNORING CASE. "close
+    IF sy-subrc = 0.
+      IF r_block-depth > 0.
+        SUBTRACT 1 FROM r_block-depth.
+      ELSE.
         r_block-closed = abap_true.
-      endif.
-    endif.
+      ENDIF.
+    ENDIF.
 
-    if r_block-interrupted is not initial.
-      concatenate r_block-markup %_newline into r_block-markup.
-      clear r_block-interrupted.
-    endif.
+    IF r_block-interrupted IS NOT INITIAL.
+      CONCATENATE r_block-markup %_newline INTO r_block-markup.
+      CLEAR r_block-interrupted.
+    ENDIF.
 
-    concatenate r_block-markup %_newline line-body into r_block-markup.
-  endmethod.                    "block_Markup_Continue
+    CONCATENATE r_block-markup %_newline line-body INTO r_block-markup.
+  ENDMETHOD.                    "block_Markup_Continue
 
 
-method block_quote.
-    find regex '^>[ ]?(.*)' in line-text submatches data(lv_m1).
-    if sy-subrc = 0.
-      shift lv_m1 left deleting leading space.
+  METHOD block_quote.
+    FIND REGEX '^>[ ]?(.*)' IN line-text SUBMATCHES DATA(lv_m1).
+    IF sy-subrc = 0.
+      SHIFT lv_m1 LEFT DELETING LEADING space.
       r_block-element-name = 'blockquote'.
       r_block-element-handler = '_lines'.
-      append lv_m1 to r_block-element-lines.
-    endif.
-  endmethod.                    "block_Quote
+      APPEND lv_m1 TO r_block-element-lines.
+    ENDIF.
+  ENDMETHOD.                    "block_Quote
 
 
-method block_quote_continue.
-    data: lv_m1 type string.
+  METHOD block_quote_continue.
+    DATA: lv_m1 TYPE string.
 
-    if line-text(1) = '>'.
+    IF line-text(1) = '>'.
       r_block = block.
-      find regex '^>[ ]?(.*)' in line-text submatches lv_m1.
-      if sy-subrc = 0.
-        shift lv_m1 left deleting leading space.
-        if r_block-interrupted is not initial.
-          append initial line to r_block-element-lines.
-          clear r_block-interrupted.
-        endif.
+      FIND REGEX '^>[ ]?(.*)' IN line-text SUBMATCHES lv_m1.
+      IF sy-subrc = 0.
+        SHIFT lv_m1 LEFT DELETING LEADING space.
+        IF r_block-interrupted IS NOT INITIAL.
+          APPEND INITIAL LINE TO r_block-element-lines.
+          CLEAR r_block-interrupted.
+        ENDIF.
 
-        append lv_m1 to r_block-element-lines.
-        return.
-      endif.
-    endif.
+        APPEND lv_m1 TO r_block-element-lines.
+        RETURN.
+      ENDIF.
+    ENDIF.
 
-    if block-interrupted is initial.
+    IF block-interrupted IS INITIAL.
       r_block = block.
-      append line-text to r_block-element-lines.
-    endif.
-  endmethod.                    "block_Quote_Continue
+      APPEND line-text TO r_block-element-lines.
+    ENDIF.
+  ENDMETHOD.                    "block_Quote_Continue
 
 
-method block_reference.
-    data: lv_m1 type string,
-          lv_m2 type string,
-          lv_m3 type string,
-          lv_m4 type string,
-          lv_id type string,
-          lo_ref_map type ref to lcl_hashmap,
-          lo_ref_item type ref to lcl_hashmap,
-          lo_ref_val type ref to lcl_string.
+  METHOD block_reference.
+    DATA: lv_m1       TYPE string,
+          lv_m2       TYPE string,
+          lv_m3       TYPE string,
+          lv_m4       TYPE string,
+          lv_id       TYPE string,
+          lo_ref_map  TYPE REF TO lcl_hashmap,
+          lo_ref_item TYPE REF TO lcl_hashmap,
+          lo_ref_val  TYPE REF TO lcl_string.
 
-    find regex '^\[(.+)\]:[ ]*<?(\S+)>?([ ]+["''(](.+)["'')])?[ ]*$'
-      in line-text submatches lv_m1 lv_m2 lv_m3 lv_m4.
-    if sy-subrc = 0.
-      lv_id = lv_m1. translate lv_id to lower case.
+    FIND REGEX '^\[(.+)\]:[ ]*<?(\S+)>?([ ]+["''(](.+)["'')])?[ ]*$'
+      IN line-text SUBMATCHES lv_m1 lv_m2 lv_m3 lv_m4.
+    IF sy-subrc = 0.
+      lv_id = lv_m1. TRANSLATE lv_id TO LOWER CASE.
 
       lo_ref_map ?= me->definition_data->get( 'Reference' ).
       lo_ref_item ?= lo_ref_map->get( lv_id ).
 
       lo_ref_val ?= lo_ref_item->get( 'url' ). lo_ref_val->data = lv_m2.
-      if lv_m3 is not initial.
+      IF lv_m3 IS NOT INITIAL.
         lo_ref_val ?= lo_ref_item->get( 'title' ). lo_ref_val->data = lv_m4.
-      endif.
+      ENDIF.
 
       r_block-hidden = abap_true.
-    endif.
-  endmethod.                    "block_Reference
+    ENDIF.
+  ENDMETHOD.                    "block_Reference
 
 
-method block_rule.
-    data: lv_regex type string.
+  METHOD block_rule.
+    DATA: lv_regex TYPE string.
 
-    concatenate '^([' line-text(1) '])([ ]*\1){2,}[ ]*$' into lv_regex.
-    find regex lv_regex in line-text.
-    if sy-subrc = 0.
+    CONCATENATE '^([' line-text(1) '])([ ]*\1){2,}[ ]*$' INTO lv_regex.
+    FIND REGEX lv_regex IN line-text.
+    IF sy-subrc = 0.
       r_block-element-name = 'hr'.
-    endif.
-  endmethod.                    "block_Rule
+    ENDIF.
+  ENDMETHOD.                    "block_Rule
 
 
-method block_setextheader.
-    check block is not initial and block-type is initial and
-          block-interrupted is initial.
+  METHOD block_setextheader.
+    CHECK block IS NOT INITIAL AND block-type IS INITIAL AND
+          block-interrupted IS INITIAL.
 
-    if line-text co line-text(1).
+    IF line-text CO line-text(1).
       r_block = block.
-      if line-text(1) = '='.
+      IF line-text(1) = '='.
         r_block-element-name = 'h1'.
-      else.
+      ELSE.
         r_block-element-name = 'h2'.
-      endif.
-    endif.
-  endmethod.                    "block_SetextHeader
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "block_SetextHeader
 
 
-method block_table.
-    data: lv_divider type string,
-          lt_divider_cells type table of string,
-          lv_len type i.
-    field-symbols: <divider_cell> like line of lt_divider_cells,
-                   <alignment> like line of r_block-alignments.
+  METHOD block_table.
+    DATA: lv_divider       TYPE string,
+          lt_divider_cells TYPE TABLE OF string,
+          lv_len           TYPE i.
+    FIELD-SYMBOLS: <divider_cell> LIKE LINE OF lt_divider_cells,
+                   <alignment>    LIKE LINE OF r_block-alignments.
 
-    check not ( block is initial or
-                block-type is not initial or
-                block-interrupted is not initial ).
+    CHECK NOT ( block IS INITIAL OR
+                block-type IS NOT INITIAL OR
+                block-interrupted IS NOT INITIAL ).
 
-    find '|' in block-element-text-text.
-    if sy-subrc = 0 and line-text co ' -:|'.
+    FIND '|' IN block-element-text-text.
+    IF sy-subrc = 0 AND line-text CO ' -:|'.
       r_block = block.
 
       lv_divider = trim( line-text ).
       lv_divider = trim( str = lv_divider  mask = '|' ).
 
-      split lv_divider at '|' into table lt_divider_cells.
-      loop at lt_divider_cells assigning <divider_cell>.
+      SPLIT lv_divider AT '|' INTO TABLE lt_divider_cells.
+      LOOP AT lt_divider_cells ASSIGNING <divider_cell>.
         <divider_cell> = trim( <divider_cell> ).
-        check <divider_cell> is not initial.
-        append initial line to r_block-alignments assigning <alignment>.
+        CHECK <divider_cell> IS NOT INITIAL.
+        APPEND INITIAL LINE TO r_block-alignments ASSIGNING <alignment>.
 
-        if <divider_cell>(1) = ':'.
+        IF <divider_cell>(1) = ':'.
           <alignment> = 'left'.
-        endif.
+        ENDIF.
 
         lv_len = strlen( <divider_cell> ) - 1.
-        if <divider_cell>+lv_len(1) = ':'.
-          if <alignment> = 'left'.
+        IF <divider_cell>+lv_len(1) = ':'.
+          IF <alignment> = 'left'.
             <alignment> = 'center'.
-          else.
+          ELSE.
             <alignment> = 'right'.
-          endif.
-        endif.
-      endloop. "lt_divider_cells
+          ENDIF.
+        ENDIF.
+      ENDLOOP. "lt_divider_cells
 
       "# ~
 
-      data: lv_header type string,
-            lt_header_cells type table of string,
-            lv_index type i,
-            lt_header_elements type ty_t_element2.
-      field-symbols: <header_cell> like line of lt_header_cells,
-                     <header_element> like line of lt_header_elements,
-                     <attribute> like line of <header_element>-attributes.
+      DATA: lv_header          TYPE string,
+            lt_header_cells    TYPE TABLE OF string,
+            lv_index           TYPE i,
+            lt_header_elements TYPE ty_t_element2.
+      FIELD-SYMBOLS: <header_cell>    LIKE LINE OF lt_header_cells,
+                     <header_element> LIKE LINE OF lt_header_elements,
+                     <attribute>      LIKE LINE OF <header_element>-attributes.
 
       lv_header = trim( r_block-element-text-text ).
       lv_header = trim( str = lv_header  mask = '|' ).
 
-      split lv_header at '|' into table lt_header_cells.
-      loop at lt_header_cells assigning <header_cell>.
+      SPLIT lv_header AT '|' INTO TABLE lt_header_cells.
+      LOOP AT lt_header_cells ASSIGNING <header_cell>.
         lv_index = sy-tabix.
         <header_cell> = trim( <header_cell> ).
 
-        append initial line to lt_header_elements assigning <header_element>.
+        APPEND INITIAL LINE TO lt_header_elements ASSIGNING <header_element>.
         <header_element>-name = 'th'.
         <header_element>-text = <header_cell>.
         <header_element>-handler = 'line'.
 
-        read table r_block-alignments assigning <alignment> index lv_index.
-        if sy-subrc = 0 and <alignment> is not initial.
-          append initial line to <header_element>-attributes assigning <attribute>.
+        READ TABLE r_block-alignments ASSIGNING <alignment> INDEX lv_index.
+        IF sy-subrc = 0 AND <alignment> IS NOT INITIAL.
+          APPEND INITIAL LINE TO <header_element>-attributes ASSIGNING <attribute>.
           <attribute>-name = 'style'.
-          concatenate 'text-align: ' <alignment> ';'
-            into <attribute>-value respecting blanks.
-        endif.
-      endloop.
+          CONCATENATE 'text-align: ' <alignment> ';'
+            INTO <attribute>-value RESPECTING BLANKS.
+        ENDIF.
+      ENDLOOP.
 
       "# ~
 
-      field-symbols: <element_text1> like line of r_block-element-texts,
-                     <element_text2> like line of <element_text1>-texts.
+      FIELD-SYMBOLS: <element_text1> LIKE LINE OF r_block-element-texts,
+                     <element_text2> LIKE LINE OF <element_text1>-texts.
 
       r_block-identified = abap_true.
       r_block-element-name = 'table'.
       r_block-element-handler = 'elements'.
 
-      append initial line to r_block-element-texts assigning <element_text1>.
+      APPEND INITIAL LINE TO r_block-element-texts ASSIGNING <element_text1>.
       <element_text1>-name = 'thead'.
       <element_text1>-handler = 'elements'.
-      append initial line to <element_text1>-texts assigning <element_text2>.
+      APPEND INITIAL LINE TO <element_text1>-texts ASSIGNING <element_text2>.
       <element_text2>-name = 'tr'.
       <element_text2>-handler = 'elements'.
       <element_text2>-texts = lt_header_elements.
 
-      append initial line to r_block-element-texts assigning <element_text1>.
+      APPEND INITIAL LINE TO r_block-element-texts ASSIGNING <element_text1>.
       <element_text1>-name = 'tbody'.
       <element_text1>-handler = 'elements'.
-    endif. "sy-subrc = 0 and line-text na ' -:|'.
-  endmethod.                    "block_Table
+    ENDIF. "sy-subrc = 0 and line-text na ' -:|'.
+  ENDMETHOD.                    "block_Table
 
 
-method block_table_continue.
-    data: lv_row type string,
-          lt_matches type match_result_tab,
-          lv_index type i,
-          lv_cell type string.
-    field-symbols: <match> like line of lt_matches,
-                   <text1> like line of r_block-element-texts,
-                   <text2> like line of <text1>-texts,
-                   <text3> like line of <text2>-texts,
-                   <alignment> like line of r_block-alignments,
-                   <attribute> like line of <text3>-attributes.
+  METHOD block_table_continue.
+    DATA: lv_row     TYPE string,
+          lt_matches TYPE match_result_tab,
+          lv_index   TYPE i,
+          lv_cell    TYPE string.
+    FIELD-SYMBOLS: <match>     LIKE LINE OF lt_matches,
+                   <text1>     LIKE LINE OF r_block-element-texts,
+                   <text2>     LIKE LINE OF <text1>-texts,
+                   <text3>     LIKE LINE OF <text2>-texts,
+                   <alignment> LIKE LINE OF r_block-alignments,
+                   <attribute> LIKE LINE OF <text3>-attributes.
 
-    check block-interrupted is initial.
+    CHECK block-interrupted IS INITIAL.
 
-    if line-text cs '|'.
+    IF line-text CS '|'.
       r_block = block.
 
       lv_row = trim( line-text ).
       lv_row = trim( str = lv_row mask = '|' ).
 
-      read table r_block-element-texts assigning <text1> index 2.
-      check sy-subrc = 0.
+      READ TABLE r_block-element-texts ASSIGNING <text1> INDEX 2.
+      CHECK sy-subrc = 0.
 
-      append initial line to <text1>-texts assigning <text2>.
+      APPEND INITIAL LINE TO <text1>-texts ASSIGNING <text2>.
       <text2>-name = 'tr'.
       <text2>-handler = 'elements'.
 
-      find all occurrences of regex '(?:(\\[|])|[^|`]|`[^`]+`|`)+'
-        in lv_row results lt_matches.
-      loop at lt_matches assigning <match>.
+      FIND ALL OCCURRENCES OF REGEX '(?:(\\[|])|[^|`]|`[^`]+`|`)+'
+        IN lv_row RESULTS lt_matches.
+      LOOP AT lt_matches ASSIGNING <match>.
         lv_index = sy-tabix.
         lv_cell = lv_row+<match>-offset(<match>-length).
         lv_cell = trim( lv_cell ).
 
-        append initial line to <text2>-texts assigning <text3>.
+        APPEND INITIAL LINE TO <text2>-texts ASSIGNING <text3>.
         <text3>-name = 'td'.
         <text3>-handler = 'line'.
         <text3>-text = lv_cell.
 
-        read table r_block-alignments assigning <alignment> index lv_index.
-        if sy-subrc = 0 and <alignment> is not initial.
-          append initial line to <text3>-attributes assigning <attribute>.
+        READ TABLE r_block-alignments ASSIGNING <alignment> INDEX lv_index.
+        IF sy-subrc = 0 AND <alignment> IS NOT INITIAL.
+          APPEND INITIAL LINE TO <text3>-attributes ASSIGNING <attribute>.
           <attribute>-name = 'style'.
-          concatenate 'text-align: ' <alignment> ';'
-            into <attribute>-value respecting blanks.
-        endif.
-      endloop. "lt_matches
-    endif. "line-text cs '|'
-  endmethod.                    "block_Table_Continue
+          CONCATENATE 'text-align: ' <alignment> ';'
+            INTO <attribute>-value RESPECTING BLANKS.
+        ENDIF.
+      ENDLOOP. "lt_matches
+    ENDIF. "line-text cs '|'
+  ENDMETHOD.                    "block_Table_Continue
 
 
-method chop.
-    data: lv_regex type string.
+  METHOD chop.
+    DATA: lv_regex TYPE string.
 
     r_str = str.
-    replace all occurrences of regex '([\.\?\*\+\|])' in mask with '\\$1'.
-    concatenate '[' mask ']*\Z' into lv_regex.
-    replace all occurrences of regex lv_regex in r_str with ''.
-  endmethod.                    "trim
+    REPLACE ALL OCCURRENCES OF REGEX '([\.\?\*\+\|])' IN mask WITH '\\$1'.
+    CONCATENATE '[' mask ']*\Z' INTO lv_regex.
+    REPLACE ALL OCCURRENCES OF REGEX lv_regex IN r_str WITH ''.
+  ENDMETHOD.                    "trim
 
 
-method constructor.
+  METHOD constructor.
     "! Constuctor method
     "! Initializes the instance constants
 
     "#
     "# Lines
     "#
-    create object block_types
-      exporting
+    CREATE OBJECT block_types
+      EXPORTING
         value_type = 'lcl_string_array'.
-    data: lo_sa type ref to lcl_string_array.
+    DATA: lo_sa TYPE REF TO lcl_string_array.
     lo_sa ?= block_types->new( '#' ). lo_sa->append( 'Header' ).
     lo_sa ?= block_types->new( '*' ). lo_sa->append( 'Rule' ). lo_sa->append( 'List' ).
     lo_sa ?= block_types->new( '+' ). lo_sa->append( 'List' ).
@@ -1046,14 +1046,14 @@ method constructor.
     lo_sa ?= block_types->new( '|' ). lo_sa->append( 'Table' ).
     lo_sa ?= block_types->new( '~' ). lo_sa->append( 'FencedCode' ).
 
-    create object unmarked_block_types.
+    CREATE OBJECT unmarked_block_types.
     unmarked_block_types->append( 'Code' ).
 
     "#
     "# Inline Elements
     "#
-    create object inline_types
-      exporting
+    CREATE OBJECT inline_types
+      EXPORTING
         value_type = 'lcl_string_array'.
     lo_sa ?= inline_types->new( '"' ). lo_sa->append( 'SpecialCharacter' ).
     lo_sa ?= inline_types->new( '!' ). lo_sa->append( 'Image' ).
@@ -1072,7 +1072,8 @@ method constructor.
     "#
     "# Read-Only
     "#
-    create object special_characters. lo_sa = special_characters.
+    CREATE OBJECT special_characters.
+    lo_sa = special_characters.
     lo_sa->append( '\' ). lo_sa->append( '`' ). lo_sa->append( '*' ).
     lo_sa->append( '_' ). lo_sa->append( '{' ). lo_sa->append( '}' ).
     lo_sa->append( '[' ). lo_sa->append( ']' ). lo_sa->append( '(' ).
@@ -1080,14 +1081,14 @@ method constructor.
     lo_sa->append( '+' ). lo_sa->append( '-' ). lo_sa->append( '.' ).
     lo_sa->append( '!' ). lo_sa->append( '|' ).
 
-    data: lo_string type ref to lcl_string.
-    create object strong_regex.
+    DATA: lo_string TYPE REF TO lcl_string.
+    CREATE OBJECT strong_regex.
     lo_string ?= strong_regex->new( '*' ).
     lo_string->data = '(^[*][*]((?:\\[*]|[^*]|[*][^*]*[*])+)[*][*](?![*]))'.
     lo_string ?= strong_regex->new( '_' ).
     lo_string->data = '(^__((?:\\_|[^_]|_[^_]*_)+)__(?!_))'.
 
-    create object em_regex.
+    CREATE OBJECT em_regex.
     lo_string ?= em_regex->new( '*' ).
     lo_string->data = '(^[*]((?:\\[*]|[^*]|[*][*][^*]+[*][*])+)[*](?![*]))'.
     lo_string ?= em_regex->new( '_' ).
@@ -1095,14 +1096,16 @@ method constructor.
 
     regex_html_attribute = '[a-zA-Z_:][\w:.-]*(?:\s*=\s*(?:[^"''=<>`\s]+|"[^"]*"|''[^'']*''))?'.
 
-    create object void_elements. lo_sa = void_elements.
+    CREATE OBJECT void_elements.
+    lo_sa = void_elements.
     lo_sa->append( 'area' ). lo_sa->append( 'base' ). lo_sa->append( 'br' ).
     lo_sa->append( 'col' ). lo_sa->append( 'command' ). lo_sa->append( 'embed' ).
     lo_sa->append( 'hr' ). lo_sa->append( 'img' ). lo_sa->append( 'input' ).
     lo_sa->append( 'link' ). lo_sa->append( 'meta' ). lo_sa->append( 'param' ).
     lo_sa->append( 'source' ).
 
-    create object text_level_elements. lo_sa = text_level_elements.
+    CREATE OBJECT text_level_elements.
+    lo_sa = text_level_elements.
     lo_sa->append( 'a' ).  lo_sa->append( 'b' ).  lo_sa->append( 'i' ).  lo_sa->append( 'q' ).
     lo_sa->append( 's' ).  lo_sa->append( 'u' ).
     lo_sa->append( 'br' ).  lo_sa->append( 'em' ).  lo_sa->append( 'rp' ).  lo_sa->append( 'rt' ).
@@ -1118,7 +1121,8 @@ method constructor.
     lo_sa->append( 'acronym' ).  lo_sa->append( 'listing' ).  lo_sa->append( 'marquee' ).
     lo_sa->append( 'basefont' ).
 
-    create object safe_links_whitelist. lo_sa = safe_links_whitelist.
+    CREATE OBJECT safe_links_whitelist.
+    lo_sa = safe_links_whitelist.
     lo_sa->append( 'http://' ).
     lo_sa->append( 'https://' ).
     lo_sa->append( 'ftp://' ).
@@ -1135,1069 +1139,1069 @@ method constructor.
     lo_sa->append( 'steam:' ).
 
     "// Method names
-    data: lo_objdescr type ref to cl_abap_objectdescr.
-    field-symbols: <method> like line of lo_objdescr->methods.
+    DATA: lo_objdescr TYPE REF TO cl_abap_objectdescr.
+    FIELD-SYMBOLS: <method> LIKE LINE OF lo_objdescr->methods.
     lo_objdescr ?= cl_abap_objectdescr=>describe_by_object_ref( me ).
-    loop at lo_objdescr->methods assigning <method>.
-      append <method>-name to me->methods.
-    endloop.
-  endmethod.                    "constructor
+    LOOP AT lo_objdescr->methods ASSIGNING <method>.
+      APPEND <method>-name TO me->methods.
+    ENDLOOP.
+  ENDMETHOD.                    "constructor
 
 
-method element.
-  data: ls_element     type ty_element,
-        lv_method_name type string,
-        lv_content     type string.
+  METHOD element.
+    DATA: ls_element     TYPE ty_element,
+          lv_method_name TYPE string,
+          lv_content     TYPE string.
 
-  magic_move( exporting from = element changing to = ls_element ).
+    magic_move( EXPORTING from = element CHANGING to = ls_element ).
 
-  if safe_mode is not initial.
-    ls_element = sanitise_element( ls_element ).
-  endif.
+    IF safe_mode IS NOT INITIAL.
+      ls_element = sanitise_element( ls_element ).
+    ENDIF.
 
-  assign component 'TEXT' of structure ls_element to field-symbol(<text>).
+    ASSIGN COMPONENT 'TEXT' OF STRUCTURE ls_element TO FIELD-SYMBOL(<text>).
 
-  markup = |<{ ls_element-name }|.
+    markup = |<{ ls_element-name }|.
 
-  if ls_element-attributes is not initial.
-    loop at ls_element-attributes assigning field-symbol(<attribute>).
-      markup = |{ markup } { <attribute>-name }="{ _escape( <attribute>-value ) }"|.
-    endloop.
-  endif.
+    IF ls_element-attributes IS NOT INITIAL.
+      LOOP AT ls_element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
+        markup = |{ markup } { <attribute>-name }="{ _escape( <attribute>-value ) }"|.
+      ENDLOOP.
+    ENDIF.
 
-  if <text> is not initial or ls_element-texts is not initial or ls_element-lines is not initial.
-    markup = |{ markup }>|.
+    IF <text> IS NOT INITIAL OR ls_element-texts IS NOT INITIAL OR ls_element-lines IS NOT INITIAL.
+      markup = |{ markup }>|.
 
-    if ls_element-handler is not initial.
-      lv_method_name = ls_element-handler.
-      translate lv_method_name to upper case.
+      IF ls_element-handler IS NOT INITIAL.
+        lv_method_name = ls_element-handler.
+        TRANSLATE lv_method_name TO UPPER CASE.
 
-      if ls_element-texts is not initial. "// for array of elements
-        call method (lv_method_name)
-          exporting
-            elements = ls_element-texts
-          receiving
-            markup   = lv_content.
-      elseif ls_element-lines is not initial. "// for array of lines
-        call method (lv_method_name)
-          exporting
-            lines  = ls_element-lines
-          receiving
-            markup = lv_content.
-      else. "// for simple text
-        call method (lv_method_name)
-          exporting
-            element = <text>
-          receiving
-            markup  = lv_content.
-      endif.
-    else.
-      if ls_element-lines is not initial.
-        concatenate lines of ls_element-lines into lv_content separated by %_newline.
-      else.
-        assign component 'TEXT' of structure <text> to <text>.
-        lv_content = <text>.
-        lv_content = _escape( text = lv_content allow_quotes = abap_true ).
-      endif.
+        IF ls_element-texts IS NOT INITIAL. "// for array of elements
+          CALL METHOD (lv_method_name)
+            EXPORTING
+              elements = ls_element-texts
+            RECEIVING
+              markup   = lv_content.
+        ELSEIF ls_element-lines IS NOT INITIAL. "// for array of lines
+          CALL METHOD (lv_method_name)
+            EXPORTING
+              lines  = ls_element-lines
+            RECEIVING
+              markup = lv_content.
+        ELSE. "// for simple text
+          CALL METHOD (lv_method_name)
+            EXPORTING
+              element = <text>
+            RECEIVING
+              markup  = lv_content.
+        ENDIF.
+      ELSE.
+        IF ls_element-lines IS NOT INITIAL.
+          CONCATENATE LINES OF ls_element-lines INTO lv_content SEPARATED BY %_newline.
+        ELSE.
+          ASSIGN COMPONENT 'TEXT' OF STRUCTURE <text> TO <text>.
+          lv_content = <text>.
+          lv_content = _escape( text = lv_content allow_quotes = abap_true ).
+        ENDIF.
 
-    endif.
-    markup = |{ markup }{ lv_content }</{ ls_element-name }>|.
+      ENDIF.
+      markup = |{ markup }{ lv_content }</{ ls_element-name }>|.
 
-  else.
-    markup = |{ markup } />|.
-  endif.
-endmethod.                    "element
+    ELSE.
+      markup = |{ markup } />|.
+    ENDIF.
+  ENDMETHOD.                    "element
 
 
-method elements.
-    data: lt_markup type table of string.
+  METHOD elements.
+    DATA: lt_markup TYPE TABLE OF string.
 
-    field-symbols: <element> type any,
-                   <markup> type string.
+    FIELD-SYMBOLS: <element> TYPE any,
+                   <markup>  TYPE string.
 
-    loop at elements assigning <element>.
-      append initial line to lt_markup assigning <markup>.
+    LOOP AT elements ASSIGNING <element>.
+      APPEND INITIAL LINE TO lt_markup ASSIGNING <markup>.
       <markup> = element( <element> ).
-    endloop.
+    ENDLOOP.
 
-    concatenate lines of lt_markup into markup separated by %_newline.
-    concatenate %_newline markup %_newline into markup.
-  endmethod.                    "elements
+    CONCATENATE LINES OF lt_markup INTO markup SEPARATED BY %_newline.
+    CONCATENATE %_newline markup %_newline INTO markup.
+  ENDMETHOD.                    "elements
 
 
-  method filter_unsafe_url_in_attribute.
+  METHOD filter_unsafe_url_in_attribute.
     r_element = element.
 
-    assign r_element-attributes[ name = attribute ] to field-symbol(<attribute>).
-    check sy-subrc = 0.
+    ASSIGN r_element-attributes[ name = attribute ] TO FIELD-SYMBOL(<attribute>).
+    CHECK sy-subrc = 0.
 
-    loop at safe_links_whitelist->data assigning field-symbol(<scheme>).
-      if stri_at_start( haystack = <attribute>-value needle = <scheme> ).
-        return.
-      endif.
-    endloop.
+    LOOP AT safe_links_whitelist->data ASSIGNING FIELD-SYMBOL(<scheme>).
+      IF stri_at_start( haystack = <attribute>-value needle = <scheme> ).
+        RETURN.
+      ENDIF.
+    ENDLOOP.
 
-    replace all occurrences of ':' in <attribute>-value with '%3A'.
-  endmethod.
-
-
-method htmlspecialchars.
-  output = input.
-  replace all occurrences of '&' in output with '&amp;'.
-  replace all occurrences of '<' in output with '&lt;'.
-  replace all occurrences of '>' in output with '&gt;'.
-
-  if ent_noquotes is initial.
-    replace all occurrences of '"' in output with '&quot;'.
-    if ent_quotes is not initial.
-      if ent_html401 is not initial.
-        replace all occurrences of '''' in output with '&#039;'.
-      else.
-        replace all occurrences of '''' in output with '&apos;'.
-      endif.
-    endif.
-  endif.
-endmethod.                    "htmlspecialchars
+    REPLACE ALL OCCURRENCES OF ':' IN <attribute>-value WITH '%3A'.
+  ENDMETHOD.
 
 
-method inline_code.
-    data: lv_marker type c,
-          lv_marker_comb type string,
-          lv_m0 type string,
-          lv_m1 type string,
-          lv_text type string.
+  METHOD htmlspecialchars.
+    output = input.
+    REPLACE ALL OCCURRENCES OF '&' IN output WITH '&amp;'.
+    REPLACE ALL OCCURRENCES OF '<' IN output WITH '&lt;'.
+    REPLACE ALL OCCURRENCES OF '>' IN output WITH '&gt;'.
+
+    IF ent_noquotes IS INITIAL.
+      REPLACE ALL OCCURRENCES OF '"' IN output WITH '&quot;'.
+      IF ent_quotes IS NOT INITIAL.
+        IF ent_html401 IS NOT INITIAL.
+          REPLACE ALL OCCURRENCES OF '''' IN output WITH '&#039;'.
+        ELSE.
+          REPLACE ALL OCCURRENCES OF '''' IN output WITH '&apos;'.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "htmlspecialchars
+
+
+  METHOD inline_code.
+    DATA: lv_marker      TYPE c,
+          lv_marker_comb TYPE string,
+          lv_m0          TYPE string,
+          lv_m1          TYPE string,
+          lv_text        TYPE string.
 
     lv_marker = excerpt-text(1).
 
     "// Deal with the different repetitions (from 5 markers to 1)
     lv_marker_comb = '&&&&&'.
-    replace all occurrences of '&' in lv_marker_comb with lv_marker.
-    while lv_marker_comb is not initial.
+    REPLACE ALL OCCURRENCES OF '&' IN lv_marker_comb WITH lv_marker.
+    WHILE lv_marker_comb IS NOT INITIAL.
       match_marked_string(
-        exporting marker = lv_marker_comb  subject = excerpt-text
-        importing m0 = lv_m0  m1 = lv_m1
-        exceptions not_found = 4
+        EXPORTING marker = lv_marker_comb  subject = excerpt-text
+        IMPORTING m0 = lv_m0  m1 = lv_m1
+        EXCEPTIONS not_found = 4
       ).
-      if sy-subrc = 0.
-        lv_text = lv_m1. condense lv_text.
+      IF sy-subrc = 0.
+        lv_text = lv_m1. CONDENSE lv_text.
         lv_text = lv_text.
-        replace all occurrences of regex '[ ]*\n' in lv_text with ' '.
+        REPLACE ALL OCCURRENCES OF REGEX '[ ]*\n' IN lv_text WITH ' '.
 
         r_inline-extent = strlen( lv_m0 ).
         r_inline-element-name = 'code'.
         r_inline-element-text-text = lv_text.
-        exit.
-      endif.
-      shift lv_marker_comb left.
-    endwhile.
-  endmethod.                    "inline_code
+        EXIT.
+      ENDIF.
+      SHIFT lv_marker_comb LEFT.
+    ENDWHILE.
+  ENDMETHOD.                    "inline_code
 
 
-method inline_emailtag.
-    check excerpt-text cs '>'.
+  METHOD inline_emailtag.
+    CHECK excerpt-text CS '>'.
 
-    data(lv_hostname_label) = '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'.
-    data(lv_common_mark_email) = '[a-zA-Z0-9.!#$%&\''*+\/=?^_`{|}~-]+@'
+    DATA(lv_hostname_label) = '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'.
+    DATA(lv_common_mark_email) = '[a-zA-Z0-9.!#$%&\''*+\/=?^_`{|}~-]+@'
       && lv_hostname_label && '(?:\.' && lv_hostname_label && ')*'.
-    data(lv_regex) = '(^<((mailto:)?' && lv_common_mark_email && ')>)'.
+    DATA(lv_regex) = '(^<((mailto:)?' && lv_common_mark_email && ')>)'.
 
-    find regex lv_regex in excerpt-text ignoring case
-      submatches data(lv_m0) data(lv_m1) data(lv_m2).
-    if sy-subrc = 0.
-      data(lv_url) = lv_m1.
-      if lv_m2 is initial.
-        concatenate 'mailto:' lv_url into lv_url.
-      endif.
+    FIND REGEX lv_regex IN excerpt-text IGNORING CASE
+      SUBMATCHES DATA(lv_m0) DATA(lv_m1) DATA(lv_m2).
+    IF sy-subrc = 0.
+      DATA(lv_url) = lv_m1.
+      IF lv_m2 IS INITIAL.
+        CONCATENATE 'mailto:' lv_url INTO lv_url.
+      ENDIF.
 
       r_inline-extent = strlen( lv_m0 ).
       r_inline-element-name = 'a'.
       r_inline-element-text-text = lv_m1.
 
-      append initial line to r_inline-element-attributes assigning field-symbol(<attribute>).
+      APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
       <attribute>-name = 'href'.
       <attribute>-value = lv_url.
-    endif.
-  endmethod.                    "inline_EmailTag
+    ENDIF.
+  ENDMETHOD.                    "inline_EmailTag
 
 
-method inline_emphasis.
-    data: lv_marker type c,
-          lv_emphasis type string,
-          lv_m0 type string,
-          lv_m1 type string,
-          lo_regex type ref to lcl_string,
-          lv_regex_delim type string,
-          lv_offset type i.
+  METHOD inline_emphasis.
+    DATA: lv_marker      TYPE c,
+          lv_emphasis    TYPE string,
+          lv_m0          TYPE string,
+          lv_m1          TYPE string,
+          lo_regex       TYPE REF TO lcl_string,
+          lv_regex_delim TYPE string,
+          lv_offset      TYPE i.
 
-    check excerpt-text is not initial.
+    CHECK excerpt-text IS NOT INITIAL.
 
     lv_marker = excerpt-text(1).
 
     lo_regex ?= me->strong_regex->get( lv_marker ).
-    if strlen( excerpt-text ) > 1 and excerpt-text+1(1) = lv_marker and
-       lo_regex->data is not initial.
-      find regex lo_regex->data in excerpt-text submatches lv_m0 lv_m1.
-      if sy-subrc = 0.
+    IF strlen( excerpt-text ) > 1 AND excerpt-text+1(1) = lv_marker AND
+       lo_regex->data IS NOT INITIAL.
+      FIND REGEX lo_regex->data IN excerpt-text SUBMATCHES lv_m0 lv_m1.
+      IF sy-subrc = 0.
         lv_emphasis = 'strong'.
 
         "// get the (ungreedy) end marker
         lv_regex_delim = '[^&][&]{2}(?![&])'.
-        replace all occurrences of '&' in lv_regex_delim with lv_marker.
-        find regex lv_regex_delim in lv_m1 match offset lv_offset.
-        if sy-subrc = 0.
-          add 1 to lv_offset.
+        REPLACE ALL OCCURRENCES OF '&' IN lv_regex_delim WITH lv_marker.
+        FIND REGEX lv_regex_delim IN lv_m1 MATCH OFFSET lv_offset.
+        IF sy-subrc = 0.
+          ADD 1 TO lv_offset.
           lv_m1 = lv_m1(lv_offset).
           lv_offset = strlen( lv_m1 ) + 4.
           lv_m0 = lv_m0(lv_offset).
-        endif.
-      endif.
-    endif.
+        ENDIF.
+      ENDIF.
+    ENDIF.
 
     lo_regex ?= me->em_regex->get( lv_marker ).
-    if lv_emphasis is initial and lo_regex->data is not initial.
-      find regex lo_regex->data in excerpt-text submatches lv_m0 lv_m1.
-      if sy-subrc = 0.
+    IF lv_emphasis IS INITIAL AND lo_regex->data IS NOT INITIAL.
+      FIND REGEX lo_regex->data IN excerpt-text SUBMATCHES lv_m0 lv_m1.
+      IF sy-subrc = 0.
         lv_emphasis = 'em'.
-      endif.
-    endif.
+      ENDIF.
+    ENDIF.
 
-    check lv_emphasis is not initial.
+    CHECK lv_emphasis IS NOT INITIAL.
 
     r_inline-extent = strlen( lv_m0 ).
     r_inline-element-name = lv_emphasis.
     r_inline-element-handler = 'line'.
     r_inline-element-text-text = lv_m1.
-  endmethod.                    "inline_Emphasis
+  ENDMETHOD.                    "inline_Emphasis
 
 
-method inline_escapesequence.
-    data: lv_ch type c.
+  METHOD inline_escapesequence.
+    DATA: lv_ch TYPE c.
 
-    check strlen( excerpt-text ) > 1.
+    CHECK strlen( excerpt-text ) > 1.
     lv_ch = excerpt-text+1(1).
     sy-tabix = me->special_characters->find( lv_ch ).
-    if sy-tabix > 0.
+    IF sy-tabix > 0.
       r_inline-markup = excerpt-text+1(1).
       r_inline-extent = 2.
-    endif.
-  endmethod.                    "inline_EscapeSequence
+    ENDIF.
+  ENDMETHOD.                    "inline_EscapeSequence
 
 
-method inline_image.
-    data: ls_link like r_inline.
-    field-symbols: <attribute> like line of r_inline-element-attributes,
-                   <attribute_from> like line of ls_link-element-attributes.
+  METHOD inline_image.
+    DATA: ls_link LIKE r_inline.
+    FIELD-SYMBOLS: <attribute>      LIKE LINE OF r_inline-element-attributes,
+                   <attribute_from> LIKE LINE OF ls_link-element-attributes.
 
-    check strlen( excerpt-text ) > 1 and
+    CHECK strlen( excerpt-text ) > 1 AND
           excerpt-text+1(1) = '['.
     excerpt-text = excerpt-text+1.
 
     ls_link = inline_link( excerpt ).
-    check ls_link is not initial.
+    CHECK ls_link IS NOT INITIAL.
 
     r_inline-extent = ls_link-extent + 1.
     r_inline-element-name = 'img'.
 
-    append initial line to r_inline-element-attributes assigning <attribute>.
+    APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
     <attribute>-name = 'src'.
-    read table ls_link-element-attributes assigning <attribute_from>
-      with key name = 'href'.
-    if sy-subrc = 0.
+    READ TABLE ls_link-element-attributes ASSIGNING <attribute_from>
+      WITH KEY name = 'href'.
+    IF sy-subrc = 0.
       <attribute>-value = <attribute_from>-value.
-      delete ls_link-element-attributes where name = 'href'.
-    endif.
+      DELETE ls_link-element-attributes WHERE name = 'href'.
+    ENDIF.
 
-    append initial line to r_inline-element-attributes assigning <attribute>.
+    APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
     <attribute>-name = 'alt'.
     <attribute>-value = ls_link-element-text-text.
 
-    append lines of ls_link-element-attributes to r_inline-element-attributes.
-  endmethod.                    "inline_Image
+    APPEND LINES OF ls_link-element-attributes TO r_inline-element-attributes.
+  ENDMETHOD.                    "inline_Image
 
 
-method inline_link.
-    constants: lc_regex_template type string value '\[((?:[^\]\[]|(?R))*)\]'.
+  METHOD inline_link.
+    CONSTANTS: lc_regex_template TYPE string VALUE '\[((?:[^\]\[]|(?R))*)\]'.
 
-    data: lv_len type i,
-          lv_m0 type string,
-          lv_m1 type string,
-          lv_m2 type string,
-          lv_definition type string,
-          lo_ref_map type ref to lcl_hashmap,
-          lo_def_map type ref to lcl_hashmap,
-          lo_def_val type ref to lcl_string,
-          lv_exists type flag.
+    DATA: lv_len        TYPE i,
+          lv_m0         TYPE string,
+          lv_m1         TYPE string,
+          lv_m2         TYPE string,
+          lv_definition TYPE string,
+          lo_ref_map    TYPE REF TO lcl_hashmap,
+          lo_def_map    TYPE REF TO lcl_hashmap,
+          lo_def_val    TYPE REF TO lcl_string,
+          lv_exists     TYPE flag.
 
-    field-symbols: <attribute> like line of r_inline-element-attributes.
+    FIELD-SYMBOLS: <attribute> LIKE LINE OF r_inline-element-attributes.
 
     r_inline-element-name = 'a'.
     r_inline-element-handler = 'line'.
 
-    data(lv_remainder) = excerpt-text.
+    DATA(lv_remainder) = excerpt-text.
 
-    data(lv_regex) = |({ lc_regex_template })|.
-    do 5 times. "// regex recursion
-      replace '(?R)' in lv_regex with lc_regex_template.
-    enddo.
-    replace '(?R)' in lv_regex with '$'.
+    DATA(lv_regex) = |({ lc_regex_template })|.
+    DO 5 TIMES. "// regex recursion
+      REPLACE '(?R)' IN lv_regex WITH lc_regex_template.
+    ENDDO.
+    REPLACE '(?R)' IN lv_regex WITH '$'.
 
-    find regex lv_regex in lv_remainder submatches lv_m0 lv_m1.
-    if sy-subrc = 0.
+    FIND REGEX lv_regex IN lv_remainder SUBMATCHES lv_m0 lv_m1.
+    IF sy-subrc = 0.
       r_inline-element-text-text = lv_m1.
       r_inline-extent = strlen( lv_m0 ).
       lv_remainder = lv_remainder+r_inline-extent.
-    else.
-      clear r_inline. return.
-    endif.
+    ELSE.
+      CLEAR r_inline. RETURN.
+    ENDIF.
 
 *^[(]\s*((?:[^ ()]+|[(][^ )]+[)])+)(?:[ ]+("[^"]*"|''[^'']*''))?\s*[)]
 *^[(]\s*((?:[^ ()]|[(][^ )]+[)])+)(?:[ ]+("[^"]*"|''[^'']*''))?\s*[)]
 *^[(]((?:[^ ()]|[(][^ )]+[)])+)(?:[ ]+("[^"]*"|''[^'']*''))?[)]
 
-    find regex '(^[(]\s*((?:[^ ()]|[(][^ )]+[)])+)(?:[ ]+("[^"]*"|''[^\'']*''))?\s*[)])'
-      in lv_remainder submatches lv_m0 lv_m1 lv_m2.
-    if sy-subrc = 0.
-      append initial line to r_inline-element-attributes assigning <attribute>.
+    FIND REGEX '(^[(]\s*((?:[^ ()]|[(][^ )]+[)])+)(?:[ ]+("[^"]*"|''[^\'']*''))?\s*[)])'
+      IN lv_remainder SUBMATCHES lv_m0 lv_m1 lv_m2.
+    IF sy-subrc = 0.
+      APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
       <attribute>-name = 'href'. <attribute>-value = lv_m1.
-      if lv_m2 is not initial.
-        append initial line to r_inline-element-attributes assigning <attribute>.
+      IF lv_m2 IS NOT INITIAL.
+        APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
         <attribute>-name = 'title'.
         lv_len = strlen( lv_m2 ) - 2.
         <attribute>-value = lv_m2+1(lv_len).
-      endif.
+      ENDIF.
 
       lv_len = strlen( lv_m0 ).
-      add lv_len to r_inline-extent.
+      ADD lv_len TO r_inline-extent.
 
-    else.
-      find regex '(^\s*\[([^\]]*)\])' in lv_remainder submatches lv_m0 lv_m1.
-      if sy-subrc = 0.
-        if lv_m1 is not initial.
+    ELSE.
+      FIND REGEX '(^\s*\[([^\]]*)\])' IN lv_remainder SUBMATCHES lv_m0 lv_m1.
+      IF sy-subrc = 0.
+        IF lv_m1 IS NOT INITIAL.
           lv_definition = lv_m1.
-        else.
+        ELSE.
           lv_definition = r_inline-element-text-text.
-        endif.
+        ENDIF.
         lv_len = strlen( lv_m0 ).
-        add lv_len to r_inline-extent.
-      else.
+        ADD lv_len TO r_inline-extent.
+      ELSE.
         lv_definition = r_inline-element-text-text.
-      endif.
+      ENDIF.
 
-      translate lv_definition to lower case.
+      TRANSLATE lv_definition TO LOWER CASE.
       lo_ref_map ?= me->definition_data->get( 'Reference' ).
       lv_exists = lo_ref_map->exists( lv_definition ).
-      if lv_exists is initial.
-        clear r_inline. return.
-      endif.
+      IF lv_exists IS INITIAL.
+        CLEAR r_inline. RETURN.
+      ENDIF.
 
       lo_def_map ?= lo_ref_map->get( lv_definition ).
 
       lo_def_val ?= lo_def_map->get( 'url' ).
-      append initial line to r_inline-element-attributes assigning <attribute>.
+      APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
       <attribute>-name = 'href'. <attribute>-value = lo_def_val->data.
 
       lv_exists = lo_def_map->exists( 'title' ).
-      if lv_exists is not initial.
+      IF lv_exists IS NOT INITIAL.
         lo_def_val ?= lo_def_map->get( 'title' ).
-        append initial line to r_inline-element-attributes assigning <attribute>.
+        APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING <attribute>.
         <attribute>-name = 'title'. <attribute>-value = lo_def_val->data.
-      endif.
-    endif.
+      ENDIF.
+    ENDIF.
 
-    read table r_inline-element-attributes assigning <attribute>
-      with key name = 'href'.
-  endmethod.                    "inline_Link
+    READ TABLE r_inline-element-attributes ASSIGNING <attribute>
+      WITH KEY name = 'href'.
+  ENDMETHOD.                    "inline_Link
 
 
-method inline_markup.
-    check me->markup_escaped is initial and
-          me->safe_mode is initial and
-          excerpt-text cs '>' and
+  METHOD inline_markup.
+    CHECK me->markup_escaped IS INITIAL AND
+          me->safe_mode IS INITIAL AND
+          excerpt-text CS '>' AND
           strlen( excerpt-text ) > 1.
 
-    find regex '(^<\/\w*[ ]*>)' in excerpt-text submatches data(lv_m0).
-    if sy-subrc <> 0.
-      find regex '(^<!---?[^>-](?:-?[^-])*-->)' in excerpt-text submatches lv_m0.
-      if sy-subrc <> 0.
-        data(lv_regex) = '(^<\w*(?:[ ]*' && me->regex_html_attribute && ')*[ ]*\/?>)'.
-        find regex lv_regex in excerpt-text submatches lv_m0.
-      endif.
-    endif.
+    FIND REGEX '(^<\/\w*[ ]*>)' IN excerpt-text SUBMATCHES DATA(lv_m0).
+    IF sy-subrc <> 0.
+      FIND REGEX '(^<!---?[^>-](?:-?[^-])*-->)' IN excerpt-text SUBMATCHES lv_m0.
+      IF sy-subrc <> 0.
+        DATA(lv_regex) = '(^<\w*(?:[ ]*' && me->regex_html_attribute && ')*[ ]*\/?>)'.
+        FIND REGEX lv_regex IN excerpt-text SUBMATCHES lv_m0.
+      ENDIF.
+    ENDIF.
 
-    if lv_m0 is not initial.
+    IF lv_m0 IS NOT INITIAL.
       r_inline-markup = lv_m0.
       r_inline-extent = strlen( lv_m0 ).
-    endif.
-  endmethod.                    "inline_Markup
+    ENDIF.
+  ENDMETHOD.                    "inline_Markup
 
 
-method inline_specialcharacter.
-    data: lv_special type string.
+  METHOD inline_specialcharacter.
+    DATA: lv_special TYPE string.
 
-    check excerpt-text is not initial.
+    CHECK excerpt-text IS NOT INITIAL.
 
-    if excerpt-text(1) = '&'.
-      find regex '^&#?\w+;' in excerpt-text.
-      if sy-subrc <> 0.
+    IF excerpt-text(1) = '&'.
+      FIND REGEX '^&#?\w+;' IN excerpt-text.
+      IF sy-subrc <> 0.
         r_inline-markup = '&amp;'.
         r_inline-extent = 1.
-        return.
-      endif.
-    endif.
+        RETURN.
+      ENDIF.
+    ENDIF.
 
-    case excerpt-text(1).
-      when '>'. lv_special = 'gt'.
-      when '<'. lv_special = 'lt'.
-      when '"'. lv_special = 'quot'.
-    endcase.
-    if lv_special is not initial.
-      concatenate '&' lv_special ';' into r_inline-markup.
+    CASE excerpt-text(1).
+      WHEN '>'. lv_special = 'gt'.
+      WHEN '<'. lv_special = 'lt'.
+      WHEN '"'. lv_special = 'quot'.
+    ENDCASE.
+    IF lv_special IS NOT INITIAL.
+      CONCATENATE '&' lv_special ';' INTO r_inline-markup.
       r_inline-extent = 1.
-    endif.
-  endmethod.                    "inline_SpecialCharacter
+    ENDIF.
+  ENDMETHOD.                    "inline_SpecialCharacter
 
 
-method inline_strikethrough.
-    data: lv_m0 type string,
-          lv_m1 type string.
+  METHOD inline_strikethrough.
+    DATA: lv_m0 TYPE string,
+          lv_m1 TYPE string.
 
-    check strlen( excerpt-text ) > 1 and
+    CHECK strlen( excerpt-text ) > 1 AND
           excerpt-text+1(1) = '~'.
 
-    find regex '(^~~(?=\S)([^(?:~~)]+)(?=\S)~~)' in excerpt-text
-      submatches lv_m0 lv_m1.
-    if sy-subrc = 0.
+    FIND REGEX '(^~~(?=\S)([^(?:~~)]+)(?=\S)~~)' IN excerpt-text
+      SUBMATCHES lv_m0 lv_m1.
+    IF sy-subrc = 0.
       r_inline-extent = strlen( lv_m0 ).
       r_inline-element-name = 'del'.
       r_inline-element-text-text = lv_m1.
       r_inline-element-handler = 'line'.
-    endif.
-  endmethod.                    "inline_Strikethrough
+    ENDIF.
+  ENDMETHOD.                    "inline_Strikethrough
 
 
-method inline_url.
-    check me->urls_linked is not initial and
-          strlen( excerpt-text ) > 2 and
+  METHOD inline_url.
+    CHECK me->urls_linked IS NOT INITIAL AND
+          strlen( excerpt-text ) > 2 AND
           excerpt-text+2(1) = '/'.
 
-    find regex '(\bhttps?:[\/]{2}[^\s<]+\b\/*)' in excerpt-context
-      ignoring case submatches data(lv_m0) match offset data(lv_offset).
-    if sy-subrc = 0.
+    FIND REGEX '(\bhttps?:[\/]{2}[^\s<]+\b\/*)' IN excerpt-context
+      IGNORING CASE SUBMATCHES DATA(lv_m0) MATCH OFFSET DATA(lv_offset).
+    IF sy-subrc = 0.
       r_inline-extent = strlen( lv_m0 ).
       r_inline-position = lv_offset + 1. "// set to +1 so 0 is not initial
       r_inline-element-name = 'a'.
       r_inline-element-text-text = lv_m0.
 
-      append initial line to r_inline-element-attributes assigning field-symbol(<attribute>).
+      APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
       <attribute>-name = 'href'.
       <attribute>-value = lv_m0.
-    endif.
-  endmethod.                    "inline_Url
+    ENDIF.
+  ENDMETHOD.                    "inline_Url
 
 
-method inline_urltag.
-    check excerpt-text cs '>'.
+  METHOD inline_urltag.
+    CHECK excerpt-text CS '>'.
 
-    find regex '(^<(\w+:\/{2}[^ >]+)>)' in excerpt-text submatches data(lv_m0) data(lv_m1).
-    if sy-subrc = 0.
-      data(lv_url) = lv_m1.
+    FIND REGEX '(^<(\w+:\/{2}[^ >]+)>)' IN excerpt-text SUBMATCHES DATA(lv_m0) DATA(lv_m1).
+    IF sy-subrc = 0.
+      DATA(lv_url) = lv_m1.
       r_inline-extent = strlen( lv_m0 ).
       r_inline-element-name = 'a'.
       r_inline-element-text-text = lv_url.
 
-      append initial line to r_inline-element-attributes assigning field-symbol(<attribute>).
+      APPEND INITIAL LINE TO r_inline-element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
       <attribute>-name = 'href'.
       <attribute>-value = lv_url.
-    endif.
-  endmethod.                    "inline_UrlTag
+    ENDIF.
+  ENDMETHOD.                    "inline_UrlTag
 
 
-method li.
+  METHOD li.
     markup = _lines( lines ).
-    data(lv_trimmed_markup) = trim( markup ).
+    DATA(lv_trimmed_markup) = trim( markup ).
 
-    read table lines transporting no fields with key table_line = ''.
-    if sy-subrc <> 0 and strlen( lv_trimmed_markup ) >= 3 and lv_trimmed_markup(3) = '<p>'.
+    READ TABLE lines TRANSPORTING NO FIELDS WITH KEY table_line = ''.
+    IF sy-subrc <> 0 AND strlen( lv_trimmed_markup ) >= 3 AND lv_trimmed_markup(3) = '<p>'.
       markup = lv_trimmed_markup+3.
-      find '</p>' in markup match offset sy-fdpos.
-      data: lv_pos_to type i.
+      FIND '</p>' IN markup MATCH OFFSET sy-fdpos.
+      DATA: lv_pos_to TYPE i.
       lv_pos_to = sy-fdpos + 4.
-      concatenate markup(sy-fdpos) markup+lv_pos_to into markup.
-    endif.
-  endmethod.                    "li
+      CONCATENATE markup(sy-fdpos) markup+lv_pos_to INTO markup.
+    ENDIF.
+  ENDMETHOD.                    "li
 
 
-method line.
-    data: lv_text type string,
-          lv_unmarked_text type string,
-          lv_marker_position type i,
-          ls_excerpt type ty_excerpt,
-          ls_inline type ty_inline,
-          lv_marker type c,
-          lo_inline_types_sa type ref to lcl_string_array,
-          lv_method_name type string,
-          lv_markup_part type string,
-          lv_continue_loop type flag.
+  METHOD line.
+    DATA: lv_text            TYPE string,
+          lv_unmarked_text   TYPE string,
+          lv_marker_position TYPE i,
+          ls_excerpt         TYPE ty_excerpt,
+          ls_inline          TYPE ty_inline,
+          lv_marker          TYPE c,
+          lo_inline_types_sa TYPE REF TO lcl_string_array,
+          lv_method_name     TYPE string,
+          lv_markup_part     TYPE string,
+          lv_continue_loop   TYPE flag.
 
-    field-symbols: <inline_type> like line of lo_inline_types_sa->data.
+    FIELD-SYMBOLS: <inline_type> LIKE LINE OF lo_inline_types_sa->data.
 
     "# lv_text contains the unexamined text
     "# ls_excerpt-text is based on the first occurrence of a marker
     lv_text = element-text.
 
-    while lv_text is not initial.
-      if not lv_text ca me->inline_marker_list.
-        exit.
-      endif.
+    WHILE lv_text IS NOT INITIAL.
+      IF NOT lv_text CA me->inline_marker_list.
+        EXIT.
+      ENDIF.
       ls_excerpt-text = lv_text+sy-fdpos.
       lv_marker = ls_excerpt-text(1).
 
-      find lv_marker in lv_text match offset lv_marker_position.
+      FIND lv_marker IN lv_text MATCH OFFSET lv_marker_position.
 
       ls_excerpt-context = lv_text.
 
       lo_inline_types_sa ?= me->inline_types->get( lv_marker ).
-      clear lv_continue_loop.
-      loop at lo_inline_types_sa->data assigning <inline_type>.
-        concatenate 'inline_' <inline_type> into lv_method_name.
-        translate lv_method_name to upper case.
-        call method (lv_method_name)
-          exporting
+      CLEAR lv_continue_loop.
+      LOOP AT lo_inline_types_sa->data ASSIGNING <inline_type>.
+        CONCATENATE 'inline_' <inline_type> INTO lv_method_name.
+        TRANSLATE lv_method_name TO UPPER CASE.
+        CALL METHOD (lv_method_name)
+          EXPORTING
             excerpt  = ls_excerpt
-          receiving
+          RECEIVING
             r_inline = ls_inline.
 
         "# makes sure that the inline belongs to "our" marker
-        check ls_inline is not initial.
-        check not ls_inline-position > lv_marker_position.
+        CHECK ls_inline IS NOT INITIAL.
+        CHECK NOT ls_inline-position > lv_marker_position.
 
         "# sets a default inline position
-        if ls_inline-position is initial.
+        IF ls_inline-position IS INITIAL.
           ls_inline-position = lv_marker_position.
-        else.
-          subtract 1 from ls_inline-position.
-        endif.
+        ELSE.
+          SUBTRACT 1 FROM ls_inline-position.
+        ENDIF.
 
         "# the text that comes before the inline
-        if ls_inline-position <= strlen( lv_text ).
+        IF ls_inline-position <= strlen( lv_text ).
           lv_unmarked_text = lv_text(ls_inline-position).
-        else.
+        ELSE.
           lv_unmarked_text = lv_text.
-        endif.
+        ENDIF.
 
         "# compile the unmarked text
         lv_markup_part = unmarked_text( lv_unmarked_text ).
-        concatenate markup lv_markup_part into markup.
+        CONCATENATE markup lv_markup_part INTO markup.
 
         "# compile the inline
-        if ls_inline-markup is not initial.
-          concatenate markup ls_inline-markup into markup.
-        else.
+        IF ls_inline-markup IS NOT INITIAL.
+          CONCATENATE markup ls_inline-markup INTO markup.
+        ELSE.
           lv_markup_part = element( ls_inline-element ).
-          concatenate markup lv_markup_part into markup.
-        endif.
+          CONCATENATE markup lv_markup_part INTO markup.
+        ENDIF.
 
         "# remove the examined text
-        data: lv_pos type i.
+        DATA: lv_pos TYPE i.
         lv_pos = ls_inline-position + ls_inline-extent.
-        if lv_pos <= strlen( lv_text ).
+        IF lv_pos <= strlen( lv_text ).
           lv_text = lv_text+lv_pos.
-        else.
-          clear lv_text.
-        endif.
+        ELSE.
+          CLEAR lv_text.
+        ENDIF.
 
-        lv_continue_loop = abap_true. exit.
-      endloop. "me->inline_types->data
-      check lv_continue_loop is initial.
+        lv_continue_loop = abap_true. EXIT.
+      ENDLOOP. "me->inline_types->data
+      CHECK lv_continue_loop IS INITIAL.
 
       "# the marker does not belong to an inline
-      add 1 to lv_marker_position.
-      if lv_marker_position <= strlen( lv_text ).
+      ADD 1 TO lv_marker_position.
+      IF lv_marker_position <= strlen( lv_text ).
         lv_unmarked_text = lv_text(lv_marker_position).
-      else.
+      ELSE.
         lv_unmarked_text = lv_text.
-      endif.
+      ENDIF.
       lv_markup_part = unmarked_text( lv_unmarked_text ).
-      concatenate markup lv_markup_part into markup.
-      if lv_marker_position <= strlen( lv_text ).
+      CONCATENATE markup lv_markup_part INTO markup.
+      IF lv_marker_position <= strlen( lv_text ).
         lv_text = lv_text+lv_marker_position.
-      else.
-        clear lv_text.
-      endif.
-    endwhile.
+      ELSE.
+        CLEAR lv_text.
+      ENDIF.
+    ENDWHILE.
 
     lv_markup_part = unmarked_text( lv_text ).
-    concatenate markup lv_markup_part into markup.
-  endmethod.                    "line
+    CONCATENATE markup lv_markup_part INTO markup.
+  ENDMETHOD.                    "line
 
 
-method magic_move.
+  METHOD magic_move.
     "!
     "! Magic move-corresponding
     "! Recursively handles any kind of structures
     "!
-    data: lo_td_from type ref to cl_abap_typedescr,
-          lo_td_to type ref to cl_abap_typedescr,
-          lo_sd_from type ref to cl_abap_structdescr,
-          lo_sd_to type ref to cl_abap_structdescr.
-    field-symbols: <tab_from> type table,
-                   <tab_to> type table,
-                   <any_from> type any,
-                   <any_to> type any.
-    field-symbols: <comp_from> like line of lo_sd_from->components,
-                   <comp_to>   like line of lo_sd_to->components.
+    DATA: lo_td_from TYPE REF TO cl_abap_typedescr,
+          lo_td_to   TYPE REF TO cl_abap_typedescr,
+          lo_sd_from TYPE REF TO cl_abap_structdescr,
+          lo_sd_to   TYPE REF TO cl_abap_structdescr.
+    FIELD-SYMBOLS: <tab_from> TYPE table,
+                   <tab_to>   TYPE table,
+                   <any_from> TYPE any,
+                   <any_to>   TYPE any.
+    FIELD-SYMBOLS: <comp_from> LIKE LINE OF lo_sd_from->components,
+                   <comp_to>   LIKE LINE OF lo_sd_to->components.
 
     lo_td_from = cl_abap_typedescr=>describe_by_data( from ).
     lo_td_to   = cl_abap_typedescr=>describe_by_data( to ).
-    if lo_td_from->absolute_name = lo_td_to->absolute_name.
+    IF lo_td_from->absolute_name = lo_td_to->absolute_name.
       to = from.
-      return.
-    endif.
+      RETURN.
+    ENDIF.
 
     "// Scenario 1 => simple to simple
-    if lo_td_from->kind = lo_td_to->kind and
+    IF lo_td_from->kind = lo_td_to->kind AND
        lo_td_from->kind = cl_abap_typedescr=>kind_elem.
-      move from to to.
+      MOVE from TO to.
 
       "// Scenario 2 => struct to struct
-    elseif lo_td_from->kind = lo_td_to->kind and
+    ELSEIF lo_td_from->kind = lo_td_to->kind AND
            lo_td_from->kind = cl_abap_typedescr=>kind_struct.
       lo_sd_from ?= lo_td_from.
       lo_sd_to ?= lo_td_to.
-      loop at lo_sd_from->components assigning <comp_from>.
-        read table lo_sd_to->components assigning <comp_to>
-          with key name = <comp_from>-name.
-        check sy-subrc = 0.
-        if <comp_to>-type_kind = cl_abap_typedescr=>typekind_table.
-          assign component <comp_to>-name of structure from to <tab_from>.
-          assign component <comp_to>-name of structure to to <tab_to>.
-          loop at <tab_from> assigning <any_from>.
-            append initial line to <tab_to> assigning <any_to>.
+      LOOP AT lo_sd_from->components ASSIGNING <comp_from>.
+        READ TABLE lo_sd_to->components ASSIGNING <comp_to>
+          WITH KEY name = <comp_from>-name.
+        CHECK sy-subrc = 0.
+        IF <comp_to>-type_kind = cl_abap_typedescr=>typekind_table.
+          ASSIGN COMPONENT <comp_to>-name OF STRUCTURE from TO <tab_from>.
+          ASSIGN COMPONENT <comp_to>-name OF STRUCTURE to TO <tab_to>.
+          LOOP AT <tab_from> ASSIGNING <any_from>.
+            APPEND INITIAL LINE TO <tab_to> ASSIGNING <any_to>.
             magic_move(
-              exporting from = <any_from> name = <comp_to>-name
-              changing to = <any_to>
+              EXPORTING from = <any_from> name = <comp_to>-name
+              CHANGING to = <any_to>
             ).
-          endloop.
-        else.
-          assign component <comp_to>-name of structure from to <any_from>.
-          assign component <comp_to>-name of structure to to <any_to>.
+          ENDLOOP.
+        ELSE.
+          ASSIGN COMPONENT <comp_to>-name OF STRUCTURE from TO <any_from>.
+          ASSIGN COMPONENT <comp_to>-name OF STRUCTURE to TO <any_to>.
           magic_move(
-            exporting from = <any_from> name = <comp_to>-name
-            changing to = <any_to>
+            EXPORTING from = <any_from> name = <comp_to>-name
+            CHANGING to = <any_to>
           ).
-        endif.
-      endloop.
+        ENDIF.
+      ENDLOOP.
 
       "// Scenario 3 => simple to struct
-    elseif lo_td_from->kind = cl_abap_typedescr=>kind_elem and
-           lo_td_to->kind = cl_abap_typedescr=>kind_struct and
-           name is not initial.
+    ELSEIF lo_td_from->kind = cl_abap_typedescr=>kind_elem AND
+           lo_td_to->kind = cl_abap_typedescr=>kind_struct AND
+           name IS NOT INITIAL.
       lo_sd_to ?= lo_td_to.
-      read table lo_sd_to->components assigning <comp_to>
-        with key name = name.
-      if sy-subrc = 0 and
+      READ TABLE lo_sd_to->components ASSIGNING <comp_to>
+        WITH KEY name = name.
+      IF sy-subrc = 0 AND
          <comp_to>-type_kind <> cl_abap_typedescr=>typekind_table.
-        assign component <comp_to>-name of structure to to <any_to>.
+        ASSIGN COMPONENT <comp_to>-name OF STRUCTURE to TO <any_to>.
         magic_move(
-          exporting from = from name = <comp_to>-name
-          changing to = <any_to>
+          EXPORTING from = from name = <comp_to>-name
+          CHANGING to = <any_to>
         ).
-      endif.
+      ENDIF.
 
       "// Scenario 4 => struct to simple
-    elseif lo_td_from->kind = cl_abap_typedescr=>kind_struct and
-           lo_td_to->kind = cl_abap_typedescr=>kind_elem and
-           name is not initial.
+    ELSEIF lo_td_from->kind = cl_abap_typedescr=>kind_struct AND
+           lo_td_to->kind = cl_abap_typedescr=>kind_elem AND
+           name IS NOT INITIAL.
       lo_sd_from ?= lo_td_from.
-      read table lo_sd_from->components assigning <comp_from>
-        with key name = name.
-      if sy-subrc = 0 and
+      READ TABLE lo_sd_from->components ASSIGNING <comp_from>
+        WITH KEY name = name.
+      IF sy-subrc = 0 AND
          <comp_from>-type_kind <> cl_abap_typedescr=>typekind_table.
-        assign component <comp_from>-name of structure to to <any_from>.
+        ASSIGN COMPONENT <comp_from>-name OF STRUCTURE to TO <any_from>.
         magic_move(
-          exporting from = <any_from> name = <comp_from>-name
-          changing to = to
+          EXPORTING from = <any_from> name = <comp_from>-name
+          CHANGING to = to
         ).
-      endif.
-    endif.
-  endmethod.                    "magic_move
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "magic_move
 
 
-method match_marked_string.
+  METHOD match_marked_string.
     "!
     "! Workaround for an ungreedy regex match
     "! Specific for regex matches with a delimiting marker
     "!
-    constants: lc_regex type string value '(^{&X}[ ]*(.+)[ ]*{&X}(?!{&1}))',
-               lc_regex_delim type string value '[^{&1}]{&X}(?!{&1})'.
-    data: lv_marker_ptn type string,
-          lv_submarker_ptn type string,
-          lv_regex type string,
-          lv_regex_delim type string,
-          lv_offset type i.
+    CONSTANTS: lc_regex       TYPE string VALUE '(^{&X}[ ]*(.+)[ ]*{&X}(?!{&1}))',
+               lc_regex_delim TYPE string VALUE '[^{&1}]{&X}(?!{&1})'.
+    DATA: lv_marker_ptn    TYPE string,
+          lv_submarker_ptn TYPE string,
+          lv_regex         TYPE string,
+          lv_regex_delim   TYPE string,
+          lv_offset        TYPE i.
 
     lv_marker_ptn = marker.
-    replace all occurrences of regex '([*?!+])' in lv_marker_ptn with '[$1]'.
+    REPLACE ALL OCCURRENCES OF REGEX '([*?!+])' IN lv_marker_ptn WITH '[$1]'.
     lv_submarker_ptn = marker(1).
-    replace all occurrences of regex '([*?!+])' in lv_submarker_ptn with '[$1]'.
+    REPLACE ALL OCCURRENCES OF REGEX '([*?!+])' IN lv_submarker_ptn WITH '[$1]'.
 
     lv_regex = lc_regex.
-    replace all occurrences of '{&1}' in lv_regex with lv_submarker_ptn.
-    replace all occurrences of '{&X}' in lv_regex with lv_marker_ptn.
+    REPLACE ALL OCCURRENCES OF '{&1}' IN lv_regex WITH lv_submarker_ptn.
+    REPLACE ALL OCCURRENCES OF '{&X}' IN lv_regex WITH lv_marker_ptn.
 
     lv_regex_delim = lc_regex_delim.
-    replace all occurrences of '{&1}' in lv_regex_delim with lv_submarker_ptn.
-    replace all occurrences of '{&X}' in lv_regex_delim with lv_marker_ptn.
+    REPLACE ALL OCCURRENCES OF '{&1}' IN lv_regex_delim WITH lv_submarker_ptn.
+    REPLACE ALL OCCURRENCES OF '{&X}' IN lv_regex_delim WITH lv_marker_ptn.
 
-    find regex lv_regex in subject submatches m0 m1.
-    if sy-subrc = 0.
-      find regex lv_regex_delim in m1 match offset lv_offset.
-      if sy-subrc = 0.
-        add 1 to lv_offset.
+    FIND REGEX lv_regex IN subject SUBMATCHES m0 m1.
+    IF sy-subrc = 0.
+      FIND REGEX lv_regex_delim IN m1 MATCH OFFSET lv_offset.
+      IF sy-subrc = 0.
+        ADD 1 TO lv_offset.
         m1 = m1(lv_offset).
         lv_offset = strlen( m1 ) + ( strlen( marker ) * 2 ).
         m0 = m0(lv_offset).
-      endif.
-    else.
-      raise not_found.
-    endif.
-  endmethod.
+      ENDIF.
+    ELSE.
+      RAISE not_found.
+    ENDIF.
+  ENDMETHOD.
 
 
-method paragraph.
+  METHOD paragraph.
     r_block-element-name = 'p'.
     r_block-element-text-text = line-text.
     r_block-element-handler = 'line'.
-  endmethod.                    "paragraph
+  ENDMETHOD.                    "paragraph
 
 
-  method SANITISE_ELEMENT.
+  METHOD sanitise_element.
     r_element = element.
 
-    constants: lc_good_attribute type string value '^[a-zA-Z0-9][a-zA-Z0-9_-]*$'.
+    CONSTANTS: lc_good_attribute TYPE string VALUE '^[a-zA-Z0-9][a-zA-Z0-9_-]*$'.
 
-    case r_element-name.
-      when 'a'.
+    CASE r_element-name.
+      WHEN 'a'.
         r_element = filter_unsafe_url_in_attribute( element = r_element attribute = 'href' ).
-      when 'img'.
+      WHEN 'img'.
         r_element = filter_unsafe_url_in_attribute( element = r_element attribute = 'src' ).
-    endcase.
+    ENDCASE.
 
-    loop at r_element-attributes assigning field-symbol(<attribute>).
+    LOOP AT r_element-attributes ASSIGNING FIELD-SYMBOL(<attribute>).
       "# filter out badly parsed attribute
-      find regex lc_good_attribute in <attribute>-name.
-      if sy-subrc <> 0.
-        delete table r_element-attributes from <attribute>. continue.
-      endif.
+      FIND REGEX lc_good_attribute IN <attribute>-name.
+      IF sy-subrc <> 0.
+        DELETE TABLE r_element-attributes FROM <attribute>. CONTINUE.
+      ENDIF.
       "# dump onevent attribute
-      if stri_at_start( haystack = <attribute>-name needle = 'on' ).
-        delete table r_element-attributes from <attribute>. continue.
-      endif.
-    endloop.
-  endmethod.
+      IF stri_at_start( haystack = <attribute>-name needle = 'on' ).
+        DELETE TABLE r_element-attributes FROM <attribute>. CONTINUE.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
 
 
-method set_breaks_enabled.
+  METHOD set_breaks_enabled.
     me->breaks_enabled = breaks_enabled.
     this = me.
-  endmethod.                    "set_breaks_enabled
+  ENDMETHOD.                    "set_breaks_enabled
 
 
-method set_markup_escaped.
+  METHOD set_markup_escaped.
     me->markup_escaped = markup_escaped.
     this = me.
-  endmethod.                    "set_markup_escaped
+  ENDMETHOD.                    "set_markup_escaped
 
 
-  method set_safe_mode.
+  METHOD set_safe_mode.
     me->safe_mode = safe_mode.
     this = me.
-  endmethod.
+  ENDMETHOD.
 
 
-method set_urls_linked.
+  METHOD set_urls_linked.
     me->urls_linked = urls_linked.
     this = me.
-  endmethod.                    "set_urls_linked
+  ENDMETHOD.                    "set_urls_linked
 
 
-  method stri_at_start.
-    data(lv_len) = strlen( needle ).
+  METHOD stri_at_start.
+    DATA(lv_len) = strlen( needle ).
 
-    if lv_len > strlen( haystack ).
+    IF lv_len > strlen( haystack ).
       result = abap_false.
-    else.
+    ELSE.
       result = xsdbool( to_lower( haystack+0(lv_len) ) = needle ).
-    endif.
-  endmethod.
+    ENDIF.
+  ENDMETHOD.
 
 
-method text.
+  METHOD text.
     "! Parses the markdown text and returns the markup
 
-    data: lt_lines type table of string.
+    DATA: lt_lines TYPE TABLE OF string.
 
     "# make sure no definitions are set
-    create object me->definition_data
-      exporting
+    CREATE OBJECT me->definition_data
+      EXPORTING
         value_type = 'lcl_hashmap:lcl_hashmap'.
 
     "# standardize line breaks
-    replace all occurrences of regex '\r?\n' in text with %_newline.
+    REPLACE ALL OCCURRENCES OF REGEX '\r?\n' IN text WITH %_newline.
 
     "# remove surrounding line breaks
     text = trim( str = text mask = '\n' ).
 
     "# split text into lines
-    split text at %_newline into table lt_lines.
+    SPLIT text AT %_newline INTO TABLE lt_lines.
 
     "# iterate through lines to identify blocks
     markup = me->_lines( lt_lines ).
 
     "# trim line breaks
     markup = trim( str = markup mask = '\n' ).
-  endmethod.                    "text
+  ENDMETHOD.                    "text
 
 
-method trim.
-    data: lv_regex type string.
+  METHOD trim.
+    DATA: lv_regex TYPE string.
 
     r_str = str.
-    replace all occurrences of regex '([\.\?\*\+\|])' in mask with '\\$1'.
-    concatenate '(\A[' mask ']*)|([' mask ']*\Z)' into lv_regex.
-    replace all occurrences of regex lv_regex in r_str with ''.
-  endmethod.                    "trim
+    REPLACE ALL OCCURRENCES OF REGEX '([\.\?\*\+\|])' IN mask WITH '\\$1'.
+    CONCATENATE '(\A[' mask ']*)|([' mask ']*\Z)' INTO lv_regex.
+    REPLACE ALL OCCURRENCES OF REGEX lv_regex IN r_str WITH ''.
+  ENDMETHOD.                    "trim
 
 
-method unmarked_text.
-    data: lv_break type string.
+  METHOD unmarked_text.
+    DATA: lv_break TYPE string.
 
-    concatenate '<br />' %_newline into lv_break.
+    CONCATENATE '<br />' %_newline INTO lv_break.
     r_text = text.
 
-    if me->breaks_enabled is not initial.
-      replace all occurrences of regex '[ ]*\n' in r_text with lv_break.
-    else.
-      replace all occurrences of regex '(?:[ ][ ]+|[ ]*\\)\n' in r_text with lv_break.
-      replace all occurrences of regex ' \n' in r_text with %_newline.
-    endif.
-  endmethod.                    "unmarked_text
+    IF me->breaks_enabled IS NOT INITIAL.
+      REPLACE ALL OCCURRENCES OF REGEX '[ ]*\n' IN r_text WITH lv_break.
+    ELSE.
+      REPLACE ALL OCCURRENCES OF REGEX '(?:[ ][ ]+|[ ]*\\)\n' IN r_text WITH lv_break.
+      REPLACE ALL OCCURRENCES OF REGEX ' \n' IN r_text WITH %_newline.
+    ENDIF.
+  ENDMETHOD.                    "unmarked_text
 
 
-  method _escape.
+  METHOD _escape.
     output = htmlspecialchars(
       input = text
       ent_html401 = abap_true
       ent_noquotes = allow_quotes
-      ent_quotes = xsdbool( allow_quotes is initial ) ).
-  endmethod.
+      ent_quotes = xsdbool( allow_quotes IS INITIAL ) ).
+  ENDMETHOD.
 
 
-method _LINES.
-    data: ls_current_block type ty_block,
-          lv_line type string,
-          lv_chopped_line type string,
-          lt_parts type table of string,
-          lv_shortage type i,
-          lv_spaces type string,
-          lv_indent type i,
-          lv_text type string,
-          lv_continue_to_next_line type flag.
+  METHOD _lines.
+    DATA: ls_current_block         TYPE ty_block,
+          lv_line                  TYPE string,
+          lv_chopped_line          TYPE string,
+          lt_parts                 TYPE TABLE OF string,
+          lv_shortage              TYPE i,
+          lv_spaces                TYPE string,
+          lv_indent                TYPE i,
+          lv_text                  TYPE string,
+          lv_continue_to_next_line TYPE flag.
 
-    field-symbols: <part> like line of lt_parts.
+    FIELD-SYMBOLS: <part> LIKE LINE OF lt_parts.
 
-    loop at lines into lv_line.
+    LOOP AT lines INTO lv_line.
 
       lv_chopped_line = lv_line.
-      replace regex '\s+$' in lv_chopped_line with ''.
-      if strlen( lv_chopped_line ) = 0.
+      REPLACE REGEX '\s+$' IN lv_chopped_line WITH ''.
+      IF strlen( lv_chopped_line ) = 0.
         ls_current_block-interrupted = abap_true.
-        continue.
-      endif.
+        CONTINUE.
+      ENDIF.
 
-      if lv_line cs %_horizontal_tab.
-        split lv_line at %_horizontal_tab into table lt_parts.
-        loop at lt_parts assigning <part>.
-          at first.
+      IF lv_line CS %_horizontal_tab.
+        SPLIT lv_line AT %_horizontal_tab INTO TABLE lt_parts.
+        LOOP AT lt_parts ASSIGNING <part>.
+          AT FIRST.
             lv_line = <part>.
-            continue.
-          endat.
-          lv_shortage = 4 - ( strlen( lv_line ) mod 4 ).
-          clear lv_spaces.
-          do lv_shortage times.
-            concatenate lv_spaces space into lv_spaces respecting blanks.
-          enddo.
-          concatenate lv_line lv_spaces <part> into lv_line respecting blanks.
-        endloop. "lt_parts
-      endif.
+            CONTINUE.
+          ENDAT.
+          lv_shortage = 4 - ( strlen( lv_line ) MOD 4 ).
+          CLEAR lv_spaces.
+          DO lv_shortage TIMES.
+            CONCATENATE lv_spaces space INTO lv_spaces RESPECTING BLANKS.
+          ENDDO.
+          CONCATENATE lv_line lv_spaces <part> INTO lv_line RESPECTING BLANKS.
+        ENDLOOP. "lt_parts
+      ENDIF.
 
-      clear lv_spaces.
-      find regex '^(\s+)' in lv_line submatches lv_spaces.
+      CLEAR lv_spaces.
+      FIND REGEX '^(\s+)' IN lv_line SUBMATCHES lv_spaces.
       lv_indent = strlen( lv_spaces ).
-      if lv_indent > 0.
+      IF lv_indent > 0.
         lv_text = lv_line+lv_indent.
-      else.
+      ELSE.
         lv_text = lv_line.
-      endif.
+      ENDIF.
 
       "# ~
 
-      data: ls_line type ty_line.
-      clear ls_line.
+      DATA: ls_line TYPE ty_line.
+      CLEAR ls_line.
       ls_line-body = lv_line.
       ls_line-indent = lv_indent.
       ls_line-text = lv_text.
 
       "# ~
 
-      data: lv_method_name type string,
-            ls_block type ty_block.
-      if ls_current_block-continuable is not initial.
-        clear ls_block.
-        concatenate 'block_' ls_current_block-type '_continue' into lv_method_name.
-        translate lv_method_name to upper case.
-        call method (lv_method_name)
-          exporting
+      DATA: lv_method_name TYPE string,
+            ls_block       TYPE ty_block.
+      IF ls_current_block-continuable IS NOT INITIAL.
+        CLEAR ls_block.
+        CONCATENATE 'block_' ls_current_block-type '_continue' INTO lv_method_name.
+        TRANSLATE lv_method_name TO UPPER CASE.
+        CALL METHOD (lv_method_name)
+          EXPORTING
             line    = ls_line
             block   = ls_current_block
-          receiving
+          RECEIVING
             r_block = ls_block.
-        if ls_block is not initial.
+        IF ls_block IS NOT INITIAL.
           ls_current_block = ls_block.
-          continue.
-        else.
-          concatenate 'block_' ls_current_block-type '_complete' into lv_method_name.
-          translate lv_method_name to upper case.
-          read table me->methods transporting no fields with key table_line = lv_method_name.
-          if sy-subrc = 0.
-            call method (lv_method_name)
-              exporting
+          CONTINUE.
+        ELSE.
+          CONCATENATE 'block_' ls_current_block-type '_complete' INTO lv_method_name.
+          TRANSLATE lv_method_name TO UPPER CASE.
+          READ TABLE me->methods TRANSPORTING NO FIELDS WITH KEY table_line = lv_method_name.
+          IF sy-subrc = 0.
+            CALL METHOD (lv_method_name)
+              EXPORTING
                 block   = ls_current_block
-              receiving
+              RECEIVING
                 r_block = ls_current_block.
-          endif.
-        endif. "ls_block is not initial.
-        clear ls_current_block-continuable.
-      endif. "ls_current_block-continuable is not initial.
+          ENDIF.
+        ENDIF. "ls_block is not initial.
+        CLEAR ls_current_block-continuable.
+      ENDIF. "ls_current_block-continuable is not initial.
 
       "# ~
 
-      data: lv_marker type string,
-            lo_block_types type ref to lcl_string_array,
-            lo_sa type ref to lcl_string_array.
+      DATA: lv_marker      TYPE string,
+            lo_block_types TYPE REF TO lcl_string_array,
+            lo_sa          TYPE REF TO lcl_string_array.
 
-      field-symbols: <block_type> type lcl_hashmap=>ty_item.
+      FIELD-SYMBOLS: <block_type> TYPE lcl_hashmap=>ty_item.
 
       lv_marker = lv_text(1).
 
       "# ~
 
-      create object lo_block_types.
+      CREATE OBJECT lo_block_types.
       lo_block_types->copy( me->unmarked_block_types ).
 
-      read table me->block_types->data assigning <block_type>
-        with key key = lv_marker.
-      if sy-subrc = 0.
+      READ TABLE me->block_types->data ASSIGNING <block_type>
+        WITH KEY key = lv_marker.
+      IF sy-subrc = 0.
         lo_sa ?= <block_type>-value.
         lo_block_types->append_array( lo_sa ).
-      endif.
+      ENDIF.
 
       "#
       "# ~
 
-      data: lt_blocks type table of ty_block.
+      DATA: lt_blocks TYPE TABLE OF ty_block.
 
-      field-symbols: <block_type_name> type string.
+      FIELD-SYMBOLS: <block_type_name> TYPE string.
 
-      loop at lo_block_types->data assigning <block_type_name>.
-        clear ls_block.
-        concatenate 'block_' <block_type_name> into lv_method_name.
-        translate lv_method_name to upper case.
-        call method (lv_method_name)
-          exporting
+      LOOP AT lo_block_types->data ASSIGNING <block_type_name>.
+        CLEAR ls_block.
+        CONCATENATE 'block_' <block_type_name> INTO lv_method_name.
+        TRANSLATE lv_method_name TO UPPER CASE.
+        CALL METHOD (lv_method_name)
+          EXPORTING
             line    = ls_line
             block   = ls_current_block
-          receiving
+          RECEIVING
             r_block = ls_block.
 
-        if ls_block is not initial.
+        IF ls_block IS NOT INITIAL.
           ls_block-type = <block_type_name>.
 
-          if ls_block-identified is initial.
-            append ls_current_block to lt_blocks.
+          IF ls_block-identified IS INITIAL.
+            APPEND ls_current_block TO lt_blocks.
             ls_block-identified = abap_true.
-          endif.
+          ENDIF.
 
-          concatenate 'block_' <block_type_name> '_continue' into lv_method_name.
-          translate lv_method_name to upper case.
-          read table me->methods transporting no fields with key table_line = lv_method_name.
-          if sy-subrc = 0.
+          CONCATENATE 'block_' <block_type_name> '_continue' INTO lv_method_name.
+          TRANSLATE lv_method_name TO UPPER CASE.
+          READ TABLE me->methods TRANSPORTING NO FIELDS WITH KEY table_line = lv_method_name.
+          IF sy-subrc = 0.
             ls_block-continuable = abap_true.
-          endif.
+          ENDIF.
 
           ls_current_block = ls_block.
           lv_continue_to_next_line = abap_true.
-          exit.
-        endif.
-      endloop. "lo_block_types->data
+          EXIT.
+        ENDIF.
+      ENDLOOP. "lo_block_types->data
 
-      if lv_continue_to_next_line is not initial.
-        clear lv_continue_to_next_line.
-        continue.
-      endif.
+      IF lv_continue_to_next_line IS NOT INITIAL.
+        CLEAR lv_continue_to_next_line.
+        CONTINUE.
+      ENDIF.
 
       "# ~
 
-      if ls_current_block is not initial and
-         ls_current_block-type is initial and
-         ls_current_block-interrupted is initial.
-        concatenate ls_current_block-element-text-text %_newline lv_text
-         into ls_current_block-element-text-text.
-      else.
-        append ls_current_block to lt_blocks.
+      IF ls_current_block IS NOT INITIAL AND
+         ls_current_block-type IS INITIAL AND
+         ls_current_block-interrupted IS INITIAL.
+        CONCATENATE ls_current_block-element-text-text %_newline lv_text
+         INTO ls_current_block-element-text-text.
+      ELSE.
+        APPEND ls_current_block TO lt_blocks.
 
         ls_current_block = me->paragraph( ls_line ).
 
         ls_current_block-identified = abap_true.
-      endif.
+      ENDIF.
 
-    endloop. "lines
+    ENDLOOP. "lines
 
     "# ~
 
-    if ls_current_block-continuable is not initial.
-      concatenate 'block_' ls_current_block-type '_complete' into lv_method_name.
-      translate lv_method_name to upper case.
-      read table me->methods transporting no fields with key table_line = lv_method_name.
-      if sy-subrc = 0.
-        call method (lv_method_name)
-          exporting
+    IF ls_current_block-continuable IS NOT INITIAL.
+      CONCATENATE 'block_' ls_current_block-type '_complete' INTO lv_method_name.
+      TRANSLATE lv_method_name TO UPPER CASE.
+      READ TABLE me->methods TRANSPORTING NO FIELDS WITH KEY table_line = lv_method_name.
+      IF sy-subrc = 0.
+        CALL METHOD (lv_method_name)
+          EXPORTING
             block   = ls_current_block
-          receiving
+          RECEIVING
             r_block = ls_current_block.
-      endif.
-    endif.
+      ENDIF.
+    ENDIF.
 
-    append ls_current_block to lt_blocks.
-    delete lt_blocks index 1.
+    APPEND ls_current_block TO lt_blocks.
+    DELETE lt_blocks INDEX 1.
 
     "# ~
 
-    data: lv_block_markup type string.
+    DATA: lv_block_markup TYPE string.
 
-    field-symbols: <block> like line of lt_blocks.
+    FIELD-SYMBOLS: <block> LIKE LINE OF lt_blocks.
 
-    loop at lt_blocks assigning <block>.
-      check <block>-hidden is initial.
+    LOOP AT lt_blocks ASSIGNING <block>.
+      CHECK <block>-hidden IS INITIAL.
 
-      if <block>-markup is not initial.
+      IF <block>-markup IS NOT INITIAL.
         lv_block_markup = <block>-markup.
-      else.
+      ELSE.
         lv_block_markup = element( <block>-element ).
-      endif.
-      concatenate markup %_newline lv_block_markup into markup respecting blanks.
-    endloop.
+      ENDIF.
+      CONCATENATE markup %_newline lv_block_markup INTO markup RESPECTING BLANKS.
+    ENDLOOP.
 
-    concatenate markup %_newline into markup respecting blanks.
-  endmethod.                    "lines
+    CONCATENATE markup %_newline INTO markup RESPECTING BLANKS.
+  ENDMETHOD.                    "lines
 ENDCLASS.
